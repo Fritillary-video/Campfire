@@ -1,6 +1,7 @@
 package com.campfire.app.Campfire.Controller;
 
 import com.campfire.app.Campfire.Service.VideoService;
+import com.campfire.app.Campfire.dto.UploadVideoResponse;
 import com.campfire.app.Campfire.dto.VideoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,14 @@ public class VideoController {
     private final VideoService videoService;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadVideo(@RequestParam("file") MultipartFile file) {
-        videoService.uploadVideo(file);
+    public UploadVideoResponse uploadVideo(@RequestParam("file") MultipartFile file) {
+        return videoService.uploadVideo(file);
+    }
+
+    @PostMapping("/thumbnail")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String uploadThumbnail(@RequestParam("file") MultipartFile file, @RequestParam("videoId") String videoId) {
+        return videoService.uploadThumbnail(file, videoId);
     }
 
     @PutMapping
@@ -23,4 +30,6 @@ public class VideoController {
     public VideoDto editVideoMetadata(@RequestBody VideoDto videoDto){
         return videoService.editVideo(videoDto);
     }
+
+
 }

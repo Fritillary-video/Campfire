@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { VideoService } from '../video.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-video',
@@ -13,7 +14,7 @@ export class UploadVideoComponent {
   fileUploaded: boolean = false;
   fileEntry: FileSystemFileEntry | undefined;
 
-  constructor(private videoService: VideoService){ }
+  constructor(private videoService: VideoService, private router : Router){ }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -64,11 +65,13 @@ export class UploadVideoComponent {
 
   public uploadVideo(){
   if(this.fileEntry !== undefined){
-    console.log(this.fileEntry.name);
+    console.log(this.fileEntry);
 
     this.fileEntry.file( file => {
-         this.videoService.uploadVideo(file).subscribe(() => {
-              console.log("Video uploaded successfully");
+         this.videoService.uploadVideo(file).subscribe( data => {
+            //console.log("Video uploaded successfully");
+//             data.videoId;
+            this.router.navigateByUrl("/save-video-details/"+data.videoId);
          });
       });
     }
