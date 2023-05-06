@@ -9,6 +9,9 @@ import { VideoDto } from './video-dto';
   providedIn: 'root'
 })
 export class VideoService {
+  saveVideo(videoMetaData: VideoDto): Observable<VideoDto> {
+    return this.httpClient.put<VideoDto>("http://localhost:8080/api/videos", videoMetaData)
+  }
 
   constructor(private httpClient: HttpClient) { }
 
