@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class VideoService {
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
+    private final UserService userService;
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile) {
         // Upload file to AWS S3
         // Save Video Data to Database
@@ -65,6 +66,80 @@ public class VideoService {
         videoDto.setDescription(savedVideo.getDescription());
         videoDto.setTags(savedVideo.getTags());
         videoDto.setVideoStatus(savedVideo.getVideoStatus());
+
+        return videoDto;
+    }
+
+    public VideoDto likeVideo(String videoId) {
+        // Get video by ID
+        Video videoById = getVideoById(videoId);
+
+        
+        //if user already liked the video, then decrement like count
+        if(userService.ifLikedVideo(videoId)){
+            videoById.decrementLikes();
+            userService.removeFromLikedVideos(videoId);
+        //if user already disliked the video, then increment like count and decrement dislike count
+        } else if(userService.ifDisLikedVideo(videoId)){
+            videoById.decrementDisLikes();
+            userService.removeFromDislikedVideos(videoId);
+            videoById.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        //increment like count
+        }else{
+            videoById.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        }
+
+        videoRepository.save(videoById);
+
+        VideoDto videoDto = new VideoDto();
+        videoDto.setVideoUrl(videoById.getVideoUrl());
+        videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
+        videoDto.setId(videoById.getId());
+        videoDto.setTitle(videoById.getTitle());
+        videoDto.setDescription(videoById.getDescription());
+        videoDto.setTags(videoById.getTags());
+        videoDto.setVideoStatus(videoById.getVideoStatus()); 
+        videoDto.setLikeCount(videoById.getLikes().get()); 
+        videoDto.setDislikeCount(videoById.getDislikes().get()); 
+
+        return videoDto;
+    }
+
+    public VideoDto dislikeVideo(String videoId) {
+        // Get video by ID
+        Video videoById = getVideoById(videoId);
+
+        
+        //if user already liked the video, then decrement like count
+        if(userService.ifDisLikedVideo(videoId)){
+            videoById.decrementDisLikes();
+            userService.removeFromDislikedVideos(videoId);
+        //if user already disliked the video, then increment like count and decrement dislike count
+        } else if(userService.ifLikedVideo(videoId)){
+            videoById.decrementLikes();
+            userService.removeFromLikedVideos(videoId);
+            videoById.incrementDisLikes();
+            userService.addToDisLikedVideos(videoId);
+        //increment like count
+        }else{
+            videoById.incrementDisLikes();
+            userService.addToDisLikedVideos(videoId);
+        }
+
+        videoRepository.save(videoById);
+
+        VideoDto videoDto = new VideoDto();
+        videoDto.setVideoUrl(videoById.getVideoUrl());
+        videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
+        videoDto.setId(videoById.getId());
+        videoDto.setTitle(videoById.getTitle());
+        videoDto.setDescription(videoById.getDescription());
+        videoDto.setTags(videoById.getTags());
+        videoDto.setVideoStatus(videoById.getVideoStatus()); 
+        videoDto.setLikeCount(videoById.getLikes().get()); 
+        videoDto.setDislikeCount(videoById.getDislikes().get()); 
 
         return videoDto;
     }
