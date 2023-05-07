@@ -10,6 +10,8 @@ import com.campfire.app.Campfire.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -59,5 +61,35 @@ public class UserService {
         User currentUser = getCurrentUser();
         currentUser.addToVideoHistory(videoId);
         userRepository.save(currentUser);
+    }
+
+    public void subscribeUser(String userId){
+        User currentUser = getCurrentUser();
+        currentUser.addToSubscribedToUsers(userId);
+        User user = findUserById(userId);
+        user.addToSubscribers(user.getId());
+
+        userRepository.save(currentUser);
+        userRepository.save(user);
+    }
+
+    public void unsubscribeUser(String userId){
+        User currentUser = getCurrentUser();
+        currentUser.removeFromSubscribedToUsers(userId);
+        User user = findUserById(userId);
+        user.removeFromSubscribers(user.getId());
+
+        userRepository.save(currentUser);
+        userRepository.save(user);
+    }
+
+    public User findUserById(String userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("cannot find user id: " + userId));
+    }
+
+    public Set<String> userHistory(String userId) {
+        User user = findUserById(userId);
+        return user.getVideoHistory();
     }
 }
