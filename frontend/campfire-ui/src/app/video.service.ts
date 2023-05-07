@@ -9,8 +9,9 @@ import { VideoDto } from './video-dto';
   providedIn: 'root'
 })
 export class VideoService {
+  apiUrl = "http://localhost:8080/"; //anywhere the base api url is, use this instead
   saveVideo(videoMetaData: VideoDto): Observable<VideoDto> {
-    return this.httpClient.put<VideoDto>("http://localhost:8080/api/videos", videoMetaData)
+    return this.httpClient.put<VideoDto>( this.apiUrl + "/api/videos", videoMetaData)
   }
 
   constructor(private httpClient: HttpClient) { }
@@ -19,7 +20,7 @@ export class VideoService {
     const formData = new FormData();
     formData.append('file', fileEntry, fileEntry.name);
 
-    return this.httpClient.post<UploadVideoResponse>("http://localhost:8080/api/videos/", formData);
+    return this.httpClient.post<UploadVideoResponse>(this.apiUrl + "/api/videos/", formData);
   }
 
 
@@ -28,13 +29,13 @@ export class VideoService {
       formData.append('file', fileEntry, fileEntry.name);
       formData.append('videoId', videoId);
 
-      return this.httpClient.post("http://localhost:8080/api/videos/thumbnail/", formData, {
+      return this.httpClient.post(this.apiUrl + "/api/videos/thumbnail/", formData, {
         responseType : 'text'
       });
     }
 
   getVideo(videoId: string): Observable<VideoDto>{
-    return this.httpClient.get<VideoDto>("http://localhost:8080/api/videos/" + videoId);
+    return this.httpClient.get<VideoDto>(this.apiUrl + "/api/videos/" + videoId);
   }
 
 }
