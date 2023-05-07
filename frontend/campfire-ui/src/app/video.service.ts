@@ -9,7 +9,7 @@ import { VideoDto } from './video-dto';
   providedIn: 'root'
 })
 export class VideoService {
-  apiUrl = "http://localhost:8080/"; //anywhere the base api url is, use this instead
+  apiUrl = "http://localhost:8080"; //anywhere the base api url is, use this instead
   saveVideo(videoMetaData: VideoDto): Observable<VideoDto> {
     return this.httpClient.put<VideoDto>( this.apiUrl + "/api/videos", videoMetaData)
   }
