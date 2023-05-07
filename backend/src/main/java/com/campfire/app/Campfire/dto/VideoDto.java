@@ -22,4 +22,5 @@ public class VideoDto {
     private VideoStatus videoStatus;
     private Integer likeCount;
     private Integer dislikeCount;
+    private Integer viewCount;
 }
