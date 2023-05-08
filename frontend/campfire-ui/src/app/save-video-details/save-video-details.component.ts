@@ -17,6 +17,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
+  videoAvailable: boolean = false;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -34,6 +35,7 @@ export class SaveVideoDetailsComponent implements OnInit {
     this.videoService.getVideo(this.videoId).subscribe(data=>{
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl = data.thumbnailUrl;
+      this.videoAvailable = true;
     })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,

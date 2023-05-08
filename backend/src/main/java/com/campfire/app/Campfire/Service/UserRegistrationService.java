@@ -29,12 +29,6 @@ public class UserRegistrationService {
 
     private final UserRepository userRepository;
 
-    public void registerUser(){
-        //Make a call to the userInfo Endpoint
-
-        //Fetch user details and save them to the database
-    }
-
     public void registerUser(String tokenValue) {
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
