@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-callback',
@@ -9,13 +10,18 @@ import { Router } from '@angular/router';
 })
 export class CallbackComponent {
 
-  constructor(private userService: UserService,
-    private router: Router) {
-    this.userService.registerUser();
-    this.router.navigateByUrl('');
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private oidcSecurityService: OidcSecurityService
+  ) {
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, accessToken }) => {
+      if (isAuthenticated) {
+        this.userService.registerUser(accessToken);
+        this.router.navigateByUrl('');
+      }
+    });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }

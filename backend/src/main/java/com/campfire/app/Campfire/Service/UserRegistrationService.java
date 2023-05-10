@@ -51,9 +51,9 @@ public class UserRegistrationService {
 
             Optional<User> userBySubject = userRepository.findBySub(userInfoDTO.getSub());
             if (userBySubject.isPresent()) {
-                throw new RuntimeErrorException(new Error(), "Exception occurred while registering user");
+                //throw new RuntimeErrorException(new Error(), "Exception occurred while registering user");
 
-                // return userBySubject.get().getId();
+                return userBySubject.get().getId();
 
             } else {
                 User user = new User();

@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
- 
 
   apiUrl : string = "http://localhost:8080";
   private userId : string = '';
+  private accessToken: string = ''; // Add this line
 
   constructor(private httpClient : HttpClient) { }
 
@@ -17,8 +17,9 @@ export class UserService {
     return this.httpClient.post<Boolean>(this.apiUrl + "/api/user/subscribe/" + userId , null);
   }
 
-  registerUser() {
-     this.httpClient.get<string>(this.apiUrl+"/api/user/register").subscribe(data => {
+  registerUser(accessToken: string) { // Add the accessToken parameter
+    this.accessToken = accessToken; // Store the access token
+    this.httpClient.get<string>(this.apiUrl+"/api/user/register").subscribe(data => {
       this.userId = data;
     });
   }
@@ -26,4 +27,9 @@ export class UserService {
   getUserId() : string{
     return this.userId;
   }
+
+  getAccessToken(): string { // Add this method to retrieve the access token
+    return this.accessToken;
+  }
 }
+
