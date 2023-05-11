@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AuthModule } from 'angular-auth-oidc-client';
+import { AuthModule, OpenIdConfiguration } from 'angular-auth-oidc-client';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
             customParamsAuthRequest: {
               audience: 'http://localhost:8080'
             },
-        }
+        } as OpenIdConfiguration
       })],
     providers: [],
     exports: [AuthModule],
