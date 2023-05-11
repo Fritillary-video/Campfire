@@ -5,7 +5,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import com.campfire.app.Campfire.Model.User;
-import com.campfire.app.Campfire.Model.Video;
 import com.campfire.app.Campfire.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

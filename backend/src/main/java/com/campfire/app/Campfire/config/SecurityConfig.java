@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // .antMatchers("/api/videos/**").hasAuthority("SCOPE_public") // whitney
-                .antMatchers(HttpMethod.GET, "/api/videos/**").permitAll() // allow anonymous access to GET /api/videos
+                .antMatchers(HttpMethod.GET, "/api/videos/**").permitAll() // allow anonymous access to GET
+                                                                           // /api/videos/{videoId}
                 .antMatchers(HttpMethod.GET, "/api/videos").permitAll() // allow anonymous access to GET /api/videos
 
                 .anyRequest().authenticated()
