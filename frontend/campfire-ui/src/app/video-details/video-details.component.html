@@ -28,9 +28,11 @@
       <mat-card-header>
         <mat-card-title>Programming Techie</mat-card-title>
         <mat-card-subtitle class="subtitles">4.2K Subscribers</mat-card-subtitle>
-        <button *ngIf="isAuthenticated"  class="subscribe-button" mat-raised-button color="warn" (click)="subscribeToUser()">SUBSCRIBE</button>
-        <button *ngIf="isAuthenticated"  class="subscribe-button-clicked" mat-raised-button color="accent">
-          SUBSCRIBED
+        <button *ngIf="showSubscribeButton" class="subscribe-button" mat-raised-button color="warn" (click)="subscribeToUser()">
+          SUBSCRIBE
+        </button>
+        <button *ngIf="showUnsubscribeButton" class="subscribe-button-clicked" mat-raised-button color="accent" (click)="unsubscribeToUser()">
+          UNSUBSCRIBED
         </button>
       </mat-card-header>
 
@@ -42,6 +44,7 @@
         <mat-chip-row>Angular</mat-chip-row>
       </mat-chip-grid>
       <mat-divider></mat-divider>
+      <app-comments [videoId]="videoId"></app-comments>
     </div>
   </div>
   <div fxFlex="5%"></div>
