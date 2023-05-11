@@ -28,8 +28,8 @@
       <mat-card-header>
         <mat-card-title>Programming Techie</mat-card-title>
         <mat-card-subtitle class="subtitles">4.2K Subscribers</mat-card-subtitle>
-        <button class="subscribe-button" mat-raised-button color="warn" (click)="subscribeToUser()">SUBSCRIBE</button>
-        <button class="subscribe-button-clicked" mat-raised-button color="accent">
+        <button *ngIf="isAuthenticated"  class="subscribe-button" mat-raised-button color="warn" (click)="subscribeToUser()">SUBSCRIBE</button>
+        <button *ngIf="isAuthenticated"  class="subscribe-button-clicked" mat-raised-button color="accent">
           SUBSCRIBED
         </button>
       </mat-card-header>

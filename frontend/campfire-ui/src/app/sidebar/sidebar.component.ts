@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  isAuthenticated: boolean = false;
+  constructor(private oidcSecurityService: OidcSecurityService){
+
+  }
+
+  ngOnInit(): void{
+    this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
+        this.isAuthenticated = isAuthenticated;
+    })
+  }
 }
