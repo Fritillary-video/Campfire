@@ -7,21 +7,21 @@
       </div>
     </mat-list-item>
 
-    <mat-list-item role="listitem" class="nav-item" routerLink="/subscriptions">
+    <mat-list-item *ngIf="isAuthenticated"  role="listitem" class="nav-item" routerLink="/subscriptions">
       <div class="mat-list-item-content">
         <mat-icon mat-list-icon>subscriptions</mat-icon>
         <span mat-line>Subscriptions</span>
       </div>
     </mat-list-item>
 
-    <mat-list-item role="listitem" class="nav-item" routerLink="/history">
+    <mat-list-item *ngIf="isAuthenticated" role="listitem" class="nav-item" routerLink="/history">
       <div class="mat-list-item-content">
         <mat-icon mat-list-icon>history</mat-icon>
         <span mat-line>History</span>
       </div>
     </mat-list-item>
 
-    <mat-list-item role="listitem" class="nav-item" routerLink="/liked-videos">
+    <mat-list-item *ngIf="isAuthenticated" role="listitem" class="nav-item" routerLink="/liked-videos">
       <div class="mat-list-item-content">
         <mat-icon mat-list-icon>thumb_up</mat-icon>
         <span mat-line>Liked Videos</span>
