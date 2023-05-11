@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                // .antMatchers("/api/videos/**").hasAuthority("SCOPE_public") // whitney
+                .antMatchers(HttpMethod.GET, "/api/videos/**").permitAll() // allow anonymous access to GET /api/videos
+                .antMatchers(HttpMethod.GET, "/api/videos").permitAll() // allow anonymous access to GET /api/videos
+
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
@@ -36,13 +41,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    JwtDecoder jwtDecoder(){
+    JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer);
         System.out.println(issuer);
 
         OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
         OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
+
+        // testing
+        // OAuth2TokenValidator<Jwt> withScope = new JwtClaimValidator<>("scope",
+        // scope -> ((String) scope).contains("public"));
+        // jwtDecoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(withAudience,
+        // withScope));
 
         jwtDecoder.setJwtValidator(withAudience);
 

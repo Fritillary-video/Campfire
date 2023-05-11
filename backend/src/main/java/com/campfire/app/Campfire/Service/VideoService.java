@@ -7,6 +7,10 @@ import com.campfire.app.Campfire.dto.CommentDto;
 import com.campfire.app.Campfire.dto.UploadVideoResponse;
 import com.campfire.app.Campfire.dto.VideoDto;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +23,7 @@ public class VideoService {
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
     private final UserService userService;
+
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile) {
         // Upload file to AWS S3
         // Save Video Data to Database
@@ -36,7 +41,7 @@ public class VideoService {
         // map dto to entity
         savedVideo.setTitle(videoDto.getTitle());
         savedVideo.setVideoStatus(videoDto.getVideoStatus());
-//        savedVideo.setVideoUrl(videoDto.getVideoUrl());
+        // savedVideo.setVideoUrl(videoDto.getVideoUrl());
         savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setDescription(videoDto.getDescription());
@@ -54,17 +59,23 @@ public class VideoService {
         return thumbnailUrl;
     }
 
-    Video getVideoById(String videoId){
+    Video getVideoById(String videoId) {
         // find video by id
         return videoRepository.findById(videoId)
-                .orElseThrow(()-> new IllegalArgumentException("Cannot find video by id - "+ videoId));
+                .orElseThrow(() -> new IllegalArgumentException("Cannot find video by id - " + videoId));
     }
 
     public VideoDto getVideoDetails(String videoId) {
         Video savedVideo = getVideoById(videoId);
-        
+
         increaseVideoCount(savedVideo);
-        userService.addVideoToHistory(videoId);
+        // userService.addVideoToHistory(videoId);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken)) {
+            userService.addVideoToHistory(videoId);
+        }
 
         return mapToVideoDto(savedVideo);
     }
@@ -74,7 +85,7 @@ public class VideoService {
         videoRepository.save(savedVideo);
     }
 
-    private VideoDto mapToVideoDto(Video video){
+    private VideoDto mapToVideoDto(Video video) {
         VideoDto videoDto = new VideoDto();
         videoDto.setVideoUrl(video.getVideoUrl());
         videoDto.setThumbnailUrl(video.getThumbnailUrl());
@@ -93,19 +104,19 @@ public class VideoService {
         // Get video by ID
         Video videoById = getVideoById(videoId);
 
-        
-        //if user already liked the video, then decrement like count
-        if(userService.ifLikedVideo(videoId)){
+        // if user already liked the video, then decrement like count
+        if (userService.ifLikedVideo(videoId)) {
             videoById.decrementLikes();
             userService.removeFromLikedVideos(videoId);
-        //if user already disliked the video, then increment like count and decrement dislike count
-        } else if(userService.ifDisLikedVideo(videoId)){
+            // if user already disliked the video, then increment like count and decrement
+            // dislike count
+        } else if (userService.ifDisLikedVideo(videoId)) {
             videoById.decrementDisLikes();
             userService.removeFromDislikedVideos(videoId);
             videoById.incrementLikes();
             userService.addToLikedVideos(videoId);
-        //increment like count
-        }else{
+            // increment like count
+        } else {
             videoById.incrementLikes();
             userService.addToLikedVideos(videoId);
         }
@@ -119,19 +130,19 @@ public class VideoService {
         // Get video by ID
         Video videoById = getVideoById(videoId);
 
-        
-        //if user already liked the video, then decrement like count
-        if(userService.ifDisLikedVideo(videoId)){
+        // if user already liked the video, then decrement like count
+        if (userService.ifDisLikedVideo(videoId)) {
             videoById.decrementDisLikes();
             userService.removeFromDislikedVideos(videoId);
-        //if user already disliked the video, then increment like count and decrement dislike count
-        } else if(userService.ifLikedVideo(videoId)){
+            // if user already disliked the video, then increment like count and decrement
+            // dislike count
+        } else if (userService.ifLikedVideo(videoId)) {
             videoById.decrementLikes();
             userService.removeFromLikedVideos(videoId);
             videoById.incrementDisLikes();
             userService.addToDisLikedVideos(videoId);
-        //increment like count
-        }else{
+            // increment like count
+        } else {
             videoById.incrementDisLikes();
             userService.addToDisLikedVideos(videoId);
         }
