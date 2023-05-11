@@ -1,27 +1,20 @@
-import { Component } from '@angular/core';
-import { UserService } from '../user.service';
-import { Router } from '@angular/router';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from "../user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-callback',
   templateUrl: './callback.component.html',
   styleUrls: ['./callback.component.css']
 })
-export class CallbackComponent {
+export class CallbackComponent implements OnInit {
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private oidcSecurityService: OidcSecurityService
-  ) {
-    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, accessToken }) => {
-      if (isAuthenticated) {
-        this.userService.registerUser(accessToken);
-        this.router.navigateByUrl('');
-      }
-    });
+  constructor(private userService: UserService, private router: Router) {
+    this.userService.registerUser();
+    this.router.navigateByUrl('');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
+
 }

@@ -30,7 +30,6 @@ public class UserRegistrationService {
     private final UserRepository userRepository;
 
     public String registerUser(String tokenValue) {
-
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(userInfoEndpoint))
@@ -50,11 +49,8 @@ public class UserRegistrationService {
             UserInfoDTO userInfoDTO = objectMapper.readValue(body, UserInfoDTO.class);
 
             Optional<User> userBySubject = userRepository.findBySub(userInfoDTO.getSub());
-            if (userBySubject.isPresent()) {
-                //throw new RuntimeErrorException(new Error(), "Exception occurred while registering user");
-
+            if(userBySubject.isPresent()){
                 return userBySubject.get().getId();
-
             } else {
                 User user = new User();
                 user.setFirstName(userInfoDTO.getGivenName());
@@ -66,9 +62,10 @@ public class UserRegistrationService {
                 return userRepository.save(user).getId();
             }
 
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeErrorException(new Error(e), "Exception occurred while registering user");
+        } catch (Exception exception) {
+            throw new RuntimeException("Exception occurred while registering user", exception);
         }
+
     }
 
 }

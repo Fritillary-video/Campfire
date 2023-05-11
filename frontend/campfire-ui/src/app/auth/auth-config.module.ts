@@ -19,6 +19,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
             },
         }
       })],
+    providers: [],
     exports: [AuthModule],
 })
 export class AuthConfigModule {}
