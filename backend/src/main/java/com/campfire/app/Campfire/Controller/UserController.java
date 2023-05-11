@@ -10,6 +10,7 @@ import com.campfire.app.Campfire.Service.UserRegistrationService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.InputMismatchException;
 import java.util.Set;
 
 @RestController
@@ -20,32 +21,31 @@ public class UserController {
     private final UserRegistrationService userRegistrationService;
     private final UserService userService;
 
-    @GetMapping("/register")
+    @GetMapping("/register") //   /api/user/register
     @ResponseStatus(HttpStatus.OK)
-    public String register(Authentication authentication){
+    public String register(Authentication authentication) {
         Jwt jwt = (Jwt) authentication.getPrincipal();
 
-        userRegistrationService.registerUser(jwt.getTokenValue());
-        return "User Registration successful";
+        return userRegistrationService.registerUser(jwt.getTokenValue());
     }
 
     @PostMapping("/subscribe/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean subscribeUser(@PathVariable String userId){
+    public boolean subscribeUser(@PathVariable String userId) {
         userService.subscribeUser(userId);
         return true;
     }
 
     @PostMapping("/unsubscribe/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean unsubscribeUser(@PathVariable String userId){
+    public boolean unsubscribeUser(@PathVariable String userId) {
         userService.unsubscribeUser(userId);
         return true;
     }
 
     @GetMapping("{userId}/History")
     @ResponseStatus(HttpStatus.OK)
-    public Set<String> userHistory(@PathVariable String userId){
+    public Set<String> userHistory(@PathVariable String userId) {
         return userService.userHistory(userId);
     }
 }

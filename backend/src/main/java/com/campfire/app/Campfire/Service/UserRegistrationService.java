@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
@@ -19,7 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserRegistrationService {
@@ -29,13 +29,12 @@ public class UserRegistrationService {
 
     private final UserRepository userRepository;
 
-    public void registerUser(String tokenValue) {
-
+    public String registerUser(String tokenValue) {
         HttpRequest httpRequest = HttpRequest.newBuilder()
-        .GET()
-        .uri(URI.create(userInfoEndpoint))
-        .setHeader("Authorization", String.format("Bearer %s", tokenValue))
-        .build();
+                .GET()
+                .uri(URI.create(userInfoEndpoint))
+                .setHeader("Authorization", String.format("Bearer %s", tokenValue))
+                .build();
 
         HttpClient httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
@@ -49,18 +48,24 @@ public class UserRegistrationService {
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             UserInfoDTO userInfoDTO = objectMapper.readValue(body, UserInfoDTO.class);
 
-            User user = new User();
-            user.setFirstName(userInfoDTO.getGivenName());
-            user.setLastName(userInfoDTO.getFamilyName());
-            user.setFullName(userInfoDTO.getName());
-            user.setEmailAddress(userInfoDTO.getEmail());
-            user.setSub(userInfoDTO.getSub());
+            Optional<User> userBySubject = userRepository.findBySub(userInfoDTO.getSub());
+            if(userBySubject.isPresent()){
+                return userBySubject.get().getId();
+            } else {
+                User user = new User();
+                user.setFirstName(userInfoDTO.getGivenName());
+                user.setLastName(userInfoDTO.getFamilyName());
+                user.setFullName(userInfoDTO.getName());
+                user.setEmailAddress(userInfoDTO.getEmail());
+                user.setSub(userInfoDTO.getSub());
 
-            userRepository.save(user);
-            
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeErrorException(new Error(e), "Exception occurred while registering user");
+                return userRepository.save(user).getId();
+            }
+
+        } catch (Exception exception) {
+            throw new RuntimeException("Exception occurred while registering user", exception);
         }
+
     }
-        
+
 }
