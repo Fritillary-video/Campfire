@@ -18,9 +18,11 @@ export class VideoDetailsComponent {
   likeCount: number = 0;
   dislikeCount: number = 0;
   viewCount: number = 0;
+  showSubscribeButton: boolean = true;
+  showUnsubscribeButton: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService, 
-    private userService : UserService) {
+  constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
+    private userService: UserService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
@@ -48,8 +50,19 @@ export class VideoDetailsComponent {
     });
   }
 
-  subscribeToUser(){
+  subscribeToUser() {
     let userId = this.userService.getUserId();
-    this.userService.subscribeToUser(userId);
+    this.userService.subscribeToUser(userId).subscribe(data => {
+      this.showSubscribeButton = false;
+      this.showUnsubscribeButton = true;
+    });
+  }
+
+  unsubscribeToUser() {
+    let userId = this.userService.getUserId();
+    this.userService.unsubscribeToUser(userId).subscribe(data => {
+      this.showSubscribeButton = true;
+      this.showUnsubscribeButton = false;
+    });
   }
 }

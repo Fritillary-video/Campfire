@@ -7,6 +7,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   providedIn: 'root'
 })
 export class UserService {
+  
 
   private userId: string = '';
 
@@ -17,8 +18,8 @@ export class UserService {
     return this.httpClient.post<boolean>("http://localhost:8080/api/user/subscribe/" + userId, null);
   }
 
-  unSubscribeUser(userId: string): Observable<boolean> {
-    return this.httpClient.post<boolean>("http://localhost:8080/api/user/unSubscribe/" + userId, null);
+  unsubscribeToUser(userId: string): Observable<boolean> {
+    return this.httpClient.post<boolean>("http://localhost:8080/api/user/unsubscribe/" + userId, null);
   }
 
   registerUser() {
