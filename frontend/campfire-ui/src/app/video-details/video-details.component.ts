@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
 import { UserService } from '../user.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-video-details',
@@ -20,9 +21,10 @@ export class VideoDetailsComponent {
   viewCount: number = 0;
   showSubscribeButton: boolean = true;
   showUnsubscribeButton: boolean = false;
+  isAuthenticated: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
-    private userService: UserService) {
+    private userService: UserService, private oidcSecurityService: OidcSecurityService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
@@ -33,6 +35,12 @@ export class VideoDetailsComponent {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
+    })
+  }
+
+  ngOnInit(): void{
+    this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
+        this.isAuthenticated = isAuthenticated;
     })
   }
 
