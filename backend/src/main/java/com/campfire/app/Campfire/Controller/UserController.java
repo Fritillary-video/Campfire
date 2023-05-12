@@ -10,7 +10,6 @@ import com.campfire.app.Campfire.Service.UserRegistrationService;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.InputMismatchException;
 import java.util.Set;
 
 @RestController
