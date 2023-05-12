@@ -1,0 +1,33 @@
+<mat-sidenav [mode]="'side'" opened>
+  <mat-nav-list role="list">
+    <mat-list-item role="listitem" class="nav-item" routerLink="/featured">
+      <div class="mat-list-item-content">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <span mat-line>Home</span>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="isAuthenticated"  role="listitem" class="nav-item" routerLink="/subscriptions">
+      <div class="mat-list-item-content">
+        <mat-icon mat-list-icon>subscriptions</mat-icon>
+        <span mat-line>Subscriptions</span>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="isAuthenticated" role="listitem" class="nav-item" routerLink="/history">
+      <div class="mat-list-item-content">
+        <mat-icon mat-list-icon>history</mat-icon>
+        <span mat-line>History</span>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="isAuthenticated" role="listitem" class="nav-item" routerLink="/liked-videos">
+      <div class="mat-list-item-content">
+        <mat-icon mat-list-icon>thumb_up</mat-icon>
+        <span mat-line>Liked Videos</span>
+      </div>
+    </mat-list-item>
+  </mat-nav-list>
+</mat-sidenav>
+
+

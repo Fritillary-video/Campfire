@@ -1,12 +1,15 @@
 package com.campfire.app.Campfire.Controller;
 
 import com.campfire.app.Campfire.Service.VideoService;
+import com.campfire.app.Campfire.dto.CommentDto;
 import com.campfire.app.Campfire.dto.UploadVideoResponse;
 import com.campfire.app.Campfire.dto.VideoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/videos")
@@ -36,6 +39,37 @@ public class VideoController {
     @ResponseStatus(HttpStatus.OK)
     public VideoDto getVideoDetails(@PathVariable String videoId){
         return videoService.getVideoDetails(videoId);
+    }
+
+    @PostMapping("/{videoId}/like")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto likeVideo(@PathVariable String videoId){
+        return videoService.likeVideo(videoId);
+    }
+
+    @PostMapping("/{videoId}/dislike")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto dislikeVideo(@PathVariable String videoId){
+        return videoService.dislikeVideo(videoId);
+    }
+
+
+    @PostMapping("{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public void addComment(@PathVariable String videoId, @RequestBody CommentDto commentDto){
+        videoService.addComment(videoId, commentDto);
+    }
+
+    @GetMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentDto> getAllComments(@PathVariable String videoId){
+        return videoService.getAllComments(videoId);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<VideoDto> getAllVideos(){
+        return videoService.getAllVideos();
     }
 
 

@@ -1,12 +1,10 @@
 package com.campfire.app.Campfire.dto;
 
-import com.campfire.app.Campfire.Model.Comment;
 import com.campfire.app.Campfire.Model.VideoStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,4 +18,7 @@ public class VideoDto {
     private String videoUrl;
     private String thumbnailUrl;
     private VideoStatus videoStatus;
+    private Integer likeCount;
+    private Integer dislikeCount;
+    private Integer viewCount;
 }

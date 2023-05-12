@@ -9,6 +9,7 @@ import { VideoDto } from './video-dto';
   providedIn: 'root'
 })
 export class VideoService {
+
   apiUrl = "http://localhost:8080"; //anywhere the base api url is, use this instead
   saveVideo(videoMetaData: VideoDto): Observable<VideoDto> {
     return this.httpClient.put<VideoDto>( this.apiUrl + "/api/videos", videoMetaData)
@@ -36,6 +37,18 @@ export class VideoService {
 
   getVideo(videoId: string): Observable<VideoDto>{
     return this.httpClient.get<VideoDto>(this.apiUrl + "/api/videos/" + videoId);
+  }
+
+  getAllVideos(): Observable<Array<VideoDto>> {
+    return this.httpClient.get<Array<VideoDto>>(this.apiUrl + "/api/videos/");
+  }
+
+  likeVideo(videoId: string) : Observable<VideoDto>{
+    return this.httpClient.post<VideoDto>(this.apiUrl + "/api/videos/" + videoId+"/like",null);
+  }
+
+  dislikeVideo(videoId: string) : Observable<VideoDto>{
+    return this.httpClient.post<VideoDto>(this.apiUrl + "/api/videos/" + videoId+"/dislike",null);
   }
 
 }

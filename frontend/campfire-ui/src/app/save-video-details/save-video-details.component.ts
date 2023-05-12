@@ -17,6 +17,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
+  videoAvailable: boolean = false;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -34,6 +35,7 @@ export class SaveVideoDetailsComponent implements OnInit {
     this.videoService.getVideo(this.videoId).subscribe(data=>{
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl = data.thumbnailUrl;
+      this.videoAvailable = true;
     })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
@@ -92,6 +94,9 @@ export class SaveVideoDetailsComponent implements OnInit {
       "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
       "videoUrl":this.videoUrl,
       "thumbnailUrl": this.thumbnailUrl,
+      "likeCount": 0,
+      "dislikeCount": 0,
+      "viewCount": 0,
     }
     this.videoService.saveVideo(videoMetaData).subscribe(data =>{
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
@@ -101,13 +106,13 @@ export class SaveVideoDetailsComponent implements OnInit {
   edit(tag: string, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
-    // Remove fruit if it no longer has a name
+    // Remove tag if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
 
-    // Edit existing fruit
+    // Edit existing tag
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags[index] = value;
