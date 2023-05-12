@@ -45,6 +45,7 @@ public class VideoService {
         savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setDescription(videoDto.getDescription());
+        savedVideo.setUserId(videoDto.getUserId());
 
         // save vid to db
         videoRepository.save(savedVideo);
