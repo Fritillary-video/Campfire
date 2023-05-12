@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VideoDto } from '../video-dto';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-save-video-details',
@@ -30,7 +31,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   thumbnailUrl!: string;
 
   constructor(private activatedRoute : ActivatedRoute, private videoService : VideoService,
-  private matSnackBar : MatSnackBar){
+  private matSnackBar : MatSnackBar, private router: Router){
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data=>{
       this.videoUrl = data.videoUrl;
@@ -101,6 +102,13 @@ export class SaveVideoDetailsComponent implements OnInit {
     this.videoService.saveVideo(videoMetaData).subscribe(data =>{
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
     });
+    this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+        .subscribe((data: any) => {
+          console.log(data);
+          // show an upload success notification
+          this.matSnackBar.open("Thumbnail Upload Successful", "OK");
+          this.router.navigateByUrl('/featured');
+        })
   }
 
   edit(tag: string, event: MatChipEditedEvent) {
