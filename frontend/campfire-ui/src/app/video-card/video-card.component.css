@@ -4,7 +4,9 @@
   }
   
   .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    /* background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg'); */
+    padding-top: 20%;
+    size: 200%;
     background-size: cover;
   }
   

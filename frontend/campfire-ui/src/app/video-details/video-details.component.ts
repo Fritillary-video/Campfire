@@ -26,6 +26,7 @@ export class VideoDetailsComponent {
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
     private userService: UserService, private oidcSecurityService: OidcSecurityService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
+    
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
       this.videoAvailable = true;
