@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VideoDto } from '../video-dto';
+import {Router} from "@angular/router";
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-save-video-details',
@@ -25,17 +27,19 @@ export class SaveVideoDetailsComponent implements OnInit {
   selectedFile! : File;
   selectedFileName = "";
   videoId = '';
+  userId = '';
   fileSelected = false;
   videoUrl!: string;
   thumbnailUrl!: string;
 
-  constructor(private activatedRoute : ActivatedRoute, private videoService : VideoService,
-  private matSnackBar : MatSnackBar){
+  constructor(private activatedRoute : ActivatedRoute, private videoService : VideoService, private userService: UserService,
+  private matSnackBar : MatSnackBar, private router: Router){
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data=>{
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl = data.thumbnailUrl;
       this.videoAvailable = true;
+      this.userId = this.userService.getUserId();
     })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
@@ -94,6 +98,7 @@ export class SaveVideoDetailsComponent implements OnInit {
       "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
       "videoUrl":this.videoUrl,
       "thumbnailUrl": this.thumbnailUrl,
+      "userId": this.userId,
       "likeCount": 0,
       "dislikeCount": 0,
       "viewCount": 0,
@@ -101,6 +106,13 @@ export class SaveVideoDetailsComponent implements OnInit {
     this.videoService.saveVideo(videoMetaData).subscribe(data =>{
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
     });
+    this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+        .subscribe((data: any) => {
+          console.log(data);
+          // show an upload success notification
+          this.matSnackBar.open("Thumbnail Upload Successful", "OK");
+          this.router.navigateByUrl('/featured');
+        })
   }
 
   edit(tag: string, event: MatChipEditedEvent) {
