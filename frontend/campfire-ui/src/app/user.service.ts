@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { VideoDto } from './video-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  
+
 
   private userId: string = '';
 
@@ -20,6 +21,22 @@ export class UserService {
 
   unsubscribeToUser(userId: string): Observable<boolean> {
     return this.httpClient.post<boolean>("http://localhost:8080/api/user/unsubscribe/" + userId, null);
+  }
+
+  getHistory(userId: string): Observable<VideoDto[]> {
+    return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/history`);
+  }
+
+  getLikedVideos(userId: string): Observable<VideoDto[]> {
+    return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/liked-videos`);
+  }
+
+  getDislikedVideos(userId: string): Observable<VideoDto[]> {
+    return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/disliked-videos`);
+  }
+
+  getSubscriptionVideos(userId: string): Observable<VideoDto[]> {
+    return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/subscribed-videos`);
   }
 
   registerUser() {
