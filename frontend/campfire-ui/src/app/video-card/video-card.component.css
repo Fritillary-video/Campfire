@@ -1,6 +1,12 @@
 .example-card {
-  max-width: 400px;
   width: 250px;
+  height: 400px
+}
+
+.card-image {
+  object-fit: cover;
+  width: 250px;
+  height: 250px;
 }
 
 .example-header-image {
