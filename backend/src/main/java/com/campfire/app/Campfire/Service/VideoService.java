@@ -46,6 +46,8 @@ public class VideoService {
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setDescription(videoDto.getDescription());
         savedVideo.setUserId(videoDto.getUserId());
+        userService.addToOwnedVideos(savedVideo.getId());
+
         // save vid to db
         videoRepository.save(savedVideo);
         return videoDto;
@@ -177,4 +179,11 @@ public class VideoService {
     public List<VideoDto> getAllVideos() {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).collect(Collectors.toList());
     }
+
+    public List<VideoDto> getVideosByUserId(String userId) {
+        return videoRepository.findByUserId(userId).stream()
+                .map(this::mapToVideoDto)
+                .collect(Collectors.toList());
+    }
+
 }

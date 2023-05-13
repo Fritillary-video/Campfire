@@ -21,6 +21,7 @@ public class User {
     private String fullName;
     private String emailAddress;
     private String sub;
+    private Set<String> videosOwned = ConcurrentHashMap.newKeySet();
     private Set<String> subscribedToUsers = ConcurrentHashMap.newKeySet();
     private Set<String> subscribers = ConcurrentHashMap.newKeySet();
     private Set<String> videoHistory = ConcurrentHashMap.newKeySet();
@@ -61,5 +62,12 @@ public class User {
 
     public void removeFromSubscribers(String userId) {
         subscribers.remove(userId);
+    }
+    public void addToOwnedVideos(String videoId) {
+        videosOwned.add(videoId);
+    }
+
+    public void removeFromOwnedVideos(String videoId) {
+        videosOwned.remove(videoId);
     }
 }

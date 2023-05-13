@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,4 +26,5 @@ public class UserInfoDTO {
     @JsonProperty("picture")
     private String picture;
     private String email;
+    private List<VideoDto> videos;
 }

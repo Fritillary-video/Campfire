@@ -2,6 +2,7 @@ package com.campfire.app.Campfire.Service;
 
 import com.campfire.app.Campfire.Model.Video;
 import com.campfire.app.Campfire.Repository.VideoRepository;
+import com.campfire.app.Campfire.dto.UserInfoDTO;
 import com.campfire.app.Campfire.dto.VideoDto;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -125,5 +127,86 @@ public class UserService {
     }
 
 
+    public List<VideoDto> likedVideos(String userId) {
+        User user = findUserById(userId);
+        Set<String> videoIds = user.getLikedVideos();
 
+        List<VideoDto> videoDtos = new ArrayList<>();
+        for (String videoId : videoIds) {
+            Video video = videoRepository.findById(videoId)
+                    .orElseThrow(() -> new IllegalArgumentException("Cannot find video id: " + videoId));
+
+            VideoDto videoDto = convertToDto(video);
+            videoDtos.add(videoDto);
+        }
+
+        return videoDtos;
+    }
+
+    public List<VideoDto> dislikedVideos(String userId) {
+        User user = findUserById(userId);
+        Set<String> videoIds = user.getDislikedVideos();
+
+        List<VideoDto> videoDtos = new ArrayList<>();
+        for (String videoId : videoIds) {
+            Video video = videoRepository.findById(videoId)
+                    .orElseThrow(() -> new IllegalArgumentException("Cannot find video id: " + videoId));
+
+            VideoDto videoDto = convertToDto(video);
+            videoDtos.add(videoDto);
+        }
+
+        return videoDtos;
+    }
+    public void addToOwnedVideos(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.addToOwnedVideos(videoId);
+        userRepository.save(currentUser);
+    }
+
+//    public List<VideoDto> subscribedVideos(String userId) {
+//        User user = findUserById(userId);
+//        Set<String> subscribedUserIds = user.getSubscribedToUsers();
+//
+//        List<VideoDto> videoDtos = new ArrayList<>();
+//        for (String subscribedUserId : subscribedUserIds) {
+//            // find user by ID
+//            User subscribedUser = userRepository.findById(subscribedUserId)
+//                    .orElseThrow(() -> new IllegalArgumentException("Cannot find user id: " + subscribedUserId));
+//
+//            // get video IDs for this user
+//            Set<String> videoIds = subscribedUser.getVideosOwned();
+//
+//            for (String videoId : videoIds) {
+//                Video video = videoRepository.findById(videoId)
+//                        .orElseThrow(() -> new IllegalArgumentException("Cannot find video id: " + videoId));
+//
+//                VideoDto videoDto = convertToDto(video);
+//                videoDtos.add(videoDto);
+//            }
+//        }
+//
+//        return videoDtos;
+//    }
+
+//    public UserInfoDTO userProfile(String userId) {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
+//
+//        List<VideoDto> videos = user.getVideosOwned().stream()
+//                .map(videoId -> videoService.getVideoDetails(videoId))
+//                .collect(Collectors.toList());
+//
+//        UserInfoDTO userInfoDTO = new UserInfoDTO();
+//        userInfoDTO.setId(user.getId());
+//        userInfoDTO.setSub(user.getSub());
+//        userInfoDTO.setGivenName(user.getFirstName());
+//        userInfoDTO.setFamilyName(user.getLastName());
+//        userInfoDTO.setName(user.getFullName());
+//        // Add user's picture if available
+//        userInfoDTO.setEmail(user.getEmailAddress());
+//        userInfoDTO.setVideos(videos);
+//
+//        return userInfoDTO;
+//    }
 }
