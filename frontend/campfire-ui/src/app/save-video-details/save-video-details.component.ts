@@ -88,7 +88,14 @@ export class SaveVideoDetailsComponent implements OnInit {
     })
   }
 
-  saveVideo(){
+  saveVideo = async() => {
+    await this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+        //.subscribe((data: any) => {
+          // console.log(data);
+          // // show an upload success notification
+          // this.matSnackBar.open("Thumbnail Upload Successful", "OK");
+          // this.router.navigateByUrl('/featured');
+        //})
     //Call the video service to make a http call to our backend
     const videoMetaData: VideoDto = {
       "id": this.videoId,
@@ -106,13 +113,13 @@ export class SaveVideoDetailsComponent implements OnInit {
     this.videoService.saveVideo(videoMetaData).subscribe(data =>{
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
     });
-    this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
-        .subscribe((data: any) => {
-          console.log(data);
-          // show an upload success notification
-          this.matSnackBar.open("Thumbnail Upload Successful", "OK");
-          this.router.navigateByUrl('/featured');
-        })
+    // this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+    //     .subscribe((data: any) => {
+    //       console.log(data);
+    //       // show an upload success notification
+    //       this.matSnackBar.open("Thumbnail Upload Successful", "OK");
+    //       this.router.navigateByUrl('/featured');
+    //     })
   }
 
   edit(tag: string, event: MatChipEditedEvent) {
