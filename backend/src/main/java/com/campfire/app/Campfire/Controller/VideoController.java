@@ -1,7 +1,7 @@
 package com.campfire.app.Campfire.Controller;
 
 import com.campfire.app.Campfire.Service.VideoService;
-import com.campfire.app.Campfire.dto.CommentDto;
+import com.campfire.app.Campfire.dto.CommentDTO;
 import com.campfire.app.Campfire.dto.UploadVideoResponse;
 import com.campfire.app.Campfire.dto.VideoDto;
 import lombok.RequiredArgsConstructor;
@@ -56,13 +56,13 @@ public class VideoController {
 
     @PostMapping("{videoId}/comment")
     @ResponseStatus(HttpStatus.OK)
-    public void addComment(@PathVariable String videoId, @RequestBody CommentDto commentDto){
+    public void addComment(@PathVariable String videoId, @RequestBody CommentDTO commentDto){
         videoService.addComment(videoId, commentDto);
     }
 
     @GetMapping("/{videoId}/comment")
     @ResponseStatus(HttpStatus.OK)
-    public List<CommentDto> getAllComments(@PathVariable String videoId){
+    public List<CommentDTO> getAllComments(@PathVariable String videoId){
         return videoService.getAllComments(videoId);
     }
 
