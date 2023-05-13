@@ -1,5 +1,8 @@
 package com.campfire.app.Campfire.Service;
 
+import com.campfire.app.Campfire.Model.Video;
+import com.campfire.app.Campfire.Repository.VideoRepository;
+import com.campfire.app.Campfire.dto.VideoDto;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -9,12 +12,15 @@ import com.campfire.app.Campfire.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final VideoRepository videoRepository;
 
     public User getCurrentUser(){
         String sub = ((Jwt) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getClaim("sub");
@@ -87,8 +93,37 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("cannot find user id: " + userId));
     }
 
-    public Set<String> userHistory(String userId) {
+    public List<VideoDto> userHistory(String userId) {
         User user = findUserById(userId);
-        return user.getVideoHistory();
+        Set<String> videoIds = user.getVideoHistory();
+
+        List<VideoDto> videoDtos = new ArrayList<>();
+        for (String videoId : videoIds) {
+            Video video = videoRepository.findById(videoId)
+                    .orElseThrow(() -> new IllegalArgumentException("Cannot find video id: " + videoId));
+
+            VideoDto videoDto = convertToDto(video);
+            videoDtos.add(videoDto);
+        }
+
+        return videoDtos;
     }
+    private VideoDto convertToDto(Video video) {
+        return new VideoDto(
+                video.getId(),
+                video.getTitle(),
+                video.getDescription(),
+                video.getUserId(),
+                video.getTags(),
+                video.getVideoUrl(),
+                video.getThumbnailUrl(),
+                video.getVideoStatus(),
+                video.getLikes().get(),
+                video.getDislikes().get(),
+                video.getViewCount().get()
+        );
+    }
+
+
+
 }
