@@ -15,29 +15,28 @@
         <button *ngIf="showSubscribeButton && isAuthenticated" class="subscribe-button" mat-raised-button color="warn"
           (click)="subscribeToUser()">SUBSCRIBE</button>
         <button *ngIf="showUnsubscribeButton && isAuthenticated" class="subscribe-button-clicked" mat-raised-button
-          color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED
-        </button>
-        <mat-divider></mat-divider>
+          color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED</button>
         <div fxFlex="50%" fxLayoutAlign="end">
-          <span class="like-dislike-section">
-            <button mat-icon-button class="thumbs-up" (click)="likeVideo()">
-              <mat-icon>thumb_up_off_alt</mat-icon>
-              {{likeCount}}
-            </button>
-            <button mat-icon-button class="thumbs-down" (click)="dislikeVideo()">
-              <mat-icon>thumb_down_off_alt</mat-icon>
-              {{dislikeCount}}
-            </button>
-          </span>
+            <span class="like-dislike-section">
+              <button mat-icon-button class="thumbs-up" (click)="likeVideo()">
+                <mat-icon>thumb_up_off_alt</mat-icon>
+                {{likeCount}}
+              </button>
+              <button mat-icon-button class="thumbs-down" (click)="dislikeVideo()">
+                <mat-icon>thumb_down_off_alt</mat-icon>
+                {{dislikeCount}}
+              </button>
+            </span>
         </div>
       </div>
       <mat-divider></mat-divider>
       <div>About video: {{videoDescription}}</div>
       <mat-divider></mat-divider>
-      <mat-chip-grid>
-        <mat-chip-row>Spring Boot</mat-chip-row>
-        <mat-chip-row>Angular</mat-chip-row>
-      </mat-chip-grid>
+      <div fxLayout="row">
+        <mat-chip-grid *ngFor="let tag of tags">
+          <mat-chip>{{tag}}</mat-chip>
+        </mat-chip-grid>
+      </div>
       <mat-divider></mat-divider>
       <app-comments [videoId]="videoId"></app-comments>
     </div>
