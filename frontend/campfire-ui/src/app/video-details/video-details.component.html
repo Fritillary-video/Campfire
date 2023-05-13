@@ -2,42 +2,37 @@
   <div fxFlex="65%" class="video-detail">
     <div fxLayout="column" fxLayoutGap="8px">
       <app-video-player *ngIf="videoAvailable" [videoUrl]="videoUrl"></app-video-player>
-      <div class="mat-title">{{videoTitle}}</div>
+      <mat-divider></mat-divider>
       <div fxLayout="row">
-        <div fxFlex="50%">
-          <span class="view-count">{{viewCount}}</span>
-          <span class="dot"></span>
-          <span class="video-upload-date">Apr 13, 2021</span>
+        <div fxLayout="column"> <mat-card-title>{{videoTitle}} </mat-card-title>
+          <mat-card-subtitle class="subtitles">4.2K Subscribers</mat-card-subtitle>
+          <div fxFlex="50%">
+            <span class="view-count">{{viewCount}} views</span>
+            <span class="dot"></span>
+            <span class="video-upload-date">Apr 13, 2021</span>
+          </div>
         </div>
+        <button *ngIf="showSubscribeButton && isAuthenticated" class="subscribe-button" mat-raised-button color="warn"
+          (click)="subscribeToUser()">SUBSCRIBE</button>
+        <button *ngIf="showUnsubscribeButton && isAuthenticated" class="subscribe-button-clicked" mat-raised-button
+          color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED
+        </button>
+        <mat-divider></mat-divider>
         <div fxFlex="50%" fxLayoutAlign="end">
           <span class="like-dislike-section">
-              <button mat-icon-button class="thumbs-up" (click)="likeVideo()">
-                <mat-icon>thumb_up_off_alt</mat-icon>
-                {{likeCount}}
-              </button>
-              <button mat-icon-button class="thumbs-down" (click)="dislikeVideo()">
-                <mat-icon>thumb_down_off_alt</mat-icon>
-                {{dislikeCount}}
-              </button>
+            <button mat-icon-button class="thumbs-up" (click)="likeVideo()">
+              <mat-icon>thumb_up_off_alt</mat-icon>
+              {{likeCount}}
+            </button>
+            <button mat-icon-button class="thumbs-down" (click)="dislikeVideo()">
+              <mat-icon>thumb_down_off_alt</mat-icon>
+              {{dislikeCount}}
+            </button>
           </span>
         </div>
       </div>
       <mat-divider></mat-divider>
-
-
-      <mat-card-header>
-        <mat-card-title>Programming Techie</mat-card-title>
-        <mat-card-subtitle class="subtitles">4.2K Subscribers</mat-card-subtitle>
-        <button *ngIf="showSubscribeButton && isAuthenticated" class="subscribe-button" mat-raised-button color="warn" (click)="subscribeToUser()">
-          SUBSCRIBE
-        </button>
-        <button *ngIf="showUnsubscribeButton && isAuthenticated" class="subscribe-button-clicked" mat-raised-button color="accent" (click)="unsubscribeToUser()">
-          UNSUBSCRIBED
-        </button>
-      </mat-card-header>
-
-
-      <div>{{videoDescription}}</div>
+      <div>About video: {{videoDescription}}</div>
       <mat-divider></mat-divider>
       <mat-chip-grid>
         <mat-chip-row>Spring Boot</mat-chip-row>
@@ -51,5 +46,3 @@
   <div fxFlex="30%" class="suggestion-bar">
   </div>
 </div>
-
-
