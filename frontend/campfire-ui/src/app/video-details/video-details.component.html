@@ -1,7 +1,7 @@
 <div fxLayout="row">
   <div fxFlex="65%" class="video-detail">
     <div fxLayout="column" fxLayoutGap="8px">
-      <app-video-player *ngIf="videoAvailable" [videoUrl]="videoUrl"></app-video-player>
+      <app-video-player *ngIf="videoAvailable" [videoUrl]="videoUrl" class="video-player-app"></app-video-player>
       <mat-divider></mat-divider>
       <div fxLayout="row">
         <div fxLayout="column"> <mat-card-title>{{videoTitle}} </mat-card-title>
