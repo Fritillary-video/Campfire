@@ -19,6 +19,7 @@ export class VideoDetailsComponent {
   likeCount: number = 0;
   dislikeCount: number = 0;
   viewCount: number = 0;
+  datePosted!: string;
   showSubscribeButton: boolean = true;
   showUnsubscribeButton: boolean = false;
   isAuthenticated: boolean = false;
@@ -36,6 +37,7 @@ export class VideoDetailsComponent {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
+      this.datePosted = data.datePosted;
     })
   }
 

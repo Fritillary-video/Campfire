@@ -109,7 +109,9 @@ export class SaveVideoDetailsComponent implements OnInit {
       "likeCount": 0,
       "dislikeCount": 0,
       "viewCount": 0,
+      "datePosted" : new Date().toLocaleDateString(),
     }
+    console.log("date: "+new Date().toLocaleDateString());
     this.videoService.saveVideo(videoMetaData).subscribe(data =>{
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
     });

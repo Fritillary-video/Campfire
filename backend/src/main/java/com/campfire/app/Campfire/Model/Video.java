@@ -29,24 +29,26 @@ public class Video {
     private AtomicInteger viewCount = new AtomicInteger(0);
     private String thumbnailUrl;
     private List<Comment> commentList = new CopyOnWriteArrayList<>();
+    private String datePosted;
 
-    public void incrementLikes(){
+    public void incrementLikes() {
         likes.incrementAndGet();
     }
 
-    public void decrementLikes(){
+    public void decrementLikes() {
         likes.decrementAndGet();
     }
 
-    public void incrementDisLikes(){
+    public void incrementDisLikes() {
         dislikes.incrementAndGet();
     }
 
-    public void decrementDisLikes(){
+    public void decrementDisLikes() {
         dislikes.decrementAndGet();
     }
 
-    public void increaseViewCount() {viewCount.incrementAndGet();
+    public void increaseViewCount() {
+        viewCount.incrementAndGet();
     }
 
     public void addComment(Comment comment) {

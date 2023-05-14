@@ -46,6 +46,7 @@ public class VideoService {
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setDescription(videoDto.getDescription());
         savedVideo.setUserId(videoDto.getUserId());
+        savedVideo.setDatePosted(videoDto.getDatePosted());
         userService.addToOwnedVideos(savedVideo.getId());
 
         // save vid to db
@@ -99,6 +100,7 @@ public class VideoService {
         videoDto.setLikeCount(video.getLikes().get());
         videoDto.setDislikeCount(video.getDislikes().get());
         videoDto.setViewCount(video.getViewCount().get());
+        videoDto.setDatePosted(video.getDatePosted());
         return videoDto;
     }
 

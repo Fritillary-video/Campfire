@@ -9,7 +9,7 @@
           <div fxFlex="50%">
             <span class="view-count">{{viewCount}} views</span>
             <span class="dot"></span>
-            <span class="video-upload-date">Apr 13, 2021</span>
+            <span class="video-upload-date">{{datePosted}}</span>
           </div>
         </div>
         <button *ngIf="showSubscribeButton && isAuthenticated" class="subscribe-button" mat-raised-button color="warn"
