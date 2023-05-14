@@ -46,7 +46,7 @@ export class UserService {
   }
 
   isSubscribed(userId: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(`http://localhost:8080/api/user/isSubscribed/${userId}`);
+    return this.httpClient.get<boolean>(`http://localhost:8080/api/user/is-subscribed/${userId}`);
   }
 
 

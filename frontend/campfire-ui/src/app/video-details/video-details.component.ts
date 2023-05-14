@@ -50,9 +50,14 @@ export class VideoDetailsComponent {
        this.userService.getUserProfile(this.uploaderId).subscribe(profileData => {
          this.accountName = profileData.email;
          this.subscribers = profileData.subscribers.size;
+         this.userService.isSubscribed(this.userService.getUserId()).subscribe(isSubscribed => {
+                  this.showSubscribeButton = !isSubscribed;
+                  this.showUnsubscribeButton = isSubscribed;
+                  console.log(isSubscribed);
+                });
        });
 
-       console.log("userId:" + data.userId);
+       console.log("current userId:" + data.userId);
      });
  }
 
