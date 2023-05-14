@@ -189,12 +189,6 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        List<Video> videos = videoRepository.findByUserId(userId);
-
-        List<VideoDto> videoDtos = videos.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setId(user.getId());
         userInfoDTO.setSub(user.getSub());
@@ -202,8 +196,9 @@ public class UserService {
         userInfoDTO.setFamilyName(user.getLastName());
         userInfoDTO.setName(user.getFullName());
         userInfoDTO.setEmail(user.getEmailAddress());
-        userInfoDTO.setVideos(videoDtos);
+        userInfoDTO.setSubscribers(user.getSubscribers());
 
         return userInfoDTO;
     }
+
 }
