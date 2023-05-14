@@ -74,4 +74,11 @@ public class UserController {
     public UserInfoDTO getUserProfile(@PathVariable String userId) {
         return userService.userProfile(userId);
     }
+
+    @GetMapping("/is-subscribed/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean isSubscribed(@PathVariable String userId) {
+        return userService.isSubscribed(userId);
+    }
+
 }

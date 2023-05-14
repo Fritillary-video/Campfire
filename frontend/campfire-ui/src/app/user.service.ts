@@ -42,15 +42,6 @@ export class UserService {
     return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/subscribed-videos`);
   }
 
-  getUserProfile(userId: string): Observable<UserInfoDTO> {
-    return this.httpClient.get<UserInfoDTO>(`http://localhost:8080/api/user/profile/${userId}`);
-  }
-
-  isSubscribed(userId: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(`http://localhost:8080/api/user/isSubscribed/${userId}`);
-  }
-
-
   registerUser() {
     this.oss.userData$.subscribe(userData => {
       this.oss.getAccessToken().subscribe(access => {
