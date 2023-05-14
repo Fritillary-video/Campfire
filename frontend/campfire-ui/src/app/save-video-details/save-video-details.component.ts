@@ -111,10 +111,12 @@ export class SaveVideoDetailsComponent implements OnInit {
       "datePosted" : new Date().toLocaleDateString(),
     }
     console.log("date: "+new Date().toLocaleDateString());
-    this.videoService.saveVideo(videoMetaData).subscribe(data =>{
+    this.router.navigateByUrl('/callback');
+
+    await this.videoService.saveVideo(videoMetaData).subscribe(data =>{
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
-      this.router.navigateByUrl('/featured');
     });
+
     // this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
     //     .subscribe((data: any) => {
     //       console.log(data);
