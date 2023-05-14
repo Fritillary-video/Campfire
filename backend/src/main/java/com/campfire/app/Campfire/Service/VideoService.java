@@ -46,8 +46,10 @@ public class VideoService {
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setDescription(videoDto.getDescription());
         savedVideo.setUserId(videoDto.getUserId());
+
+        // this line below errored out
         savedVideo.setDatePosted(videoDto.getDatePosted());
-        userService.addToOwnedVideos(savedVideo.getId());
+        // userService.addToOwnedVideos(savedVideo.getId());
 
         // save vid to db
         videoRepository.save(savedVideo);
