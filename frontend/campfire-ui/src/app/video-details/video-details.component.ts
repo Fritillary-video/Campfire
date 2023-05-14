@@ -22,11 +22,12 @@ export class VideoDetailsComponent {
   showSubscribeButton: boolean = true;
   showUnsubscribeButton: boolean = false;
   isAuthenticated: boolean = false;
+  uploaderId!: string; // new field
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
     private userService: UserService, private oidcSecurityService: OidcSecurityService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
-    
+
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
       this.videoAvailable = true;
@@ -36,6 +37,8 @@ export class VideoDetailsComponent {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
+      this.uploaderId = data.userId;
+      console.log("userId:" + data.userId);
     })
   }
 
@@ -60,16 +63,14 @@ export class VideoDetailsComponent {
   }
 
   subscribeToUser() {
-    let userId = this.userService.getUserId();
-    this.userService.subscribeToUser(userId).subscribe(data => {
+    this.userService.subscribeToUser(this.uploaderId).subscribe(data => {
       this.showSubscribeButton = false;
       this.showUnsubscribeButton = true;
     });
   }
 
   unsubscribeToUser() {
-    let userId = this.userService.getUserId();
-    this.userService.unsubscribeToUser(userId).subscribe(data => {
+    this.userService.unsubscribeToUser(this.uploaderId).subscribe(data => {
       this.showSubscribeButton = true;
       this.showUnsubscribeButton = false;
     });
