@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { VideoDto } from './video-dto';
 import { Router } from '@angular/router';
@@ -10,14 +10,13 @@ import { Router } from '@angular/router';
 })
 export class UserService {
 
-
   private userId: string = '';
 
   constructor(private httpClient: HttpClient, private oss: OidcSecurityService, private router: Router) {
   }
 
   subscribeToUser(userId: string): Observable<boolean> {
-  console.log(userId);
+    console.log(userId);
     return this.httpClient.post<boolean>("http://localhost:8080/api/user/subscribe/" + userId, null);
   }
 
@@ -48,9 +47,9 @@ export class UserService {
         if (access !== null) {
           this.httpClient.get("http://localhost:8080/api/user/register", { responseType: "text" })
             .subscribe(data => {
-              //console.log("got data")
               this.userId = data;
-               this.router.navigateByUrl('/featured');
+              //console.log("In user Service, userId: "+this.userId);
+              this.router.navigateByUrl('/featured');
             });
         }
       });
@@ -58,6 +57,8 @@ export class UserService {
   }
 
   getUserId(): string {
+    //console.log("in get userId in user servide, userId: "+this.userId);
     return this.userId;
   }
 }
+ 
