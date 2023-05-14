@@ -63,15 +63,15 @@ public class UserController {
         return userService.dislikedVideos(userId);
     }
 
-//    @GetMapping("{userId}/subscribed-videos")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<VideoDto> subscribedVideos(@PathVariable String userId) {
-//        return userService.subscribedVideos(userId);
-//    }
+    @GetMapping("{userId}/subscribed-videos")
+    @ResponseStatus(HttpStatus.OK)
+    public List<VideoDto> subscribedVideos(@PathVariable String userId) {
+        return userService.subscribedVideos(userId);
+    }
 
-//    @GetMapping("/profile/{userId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public UserInfoDTO getUserProfile(@PathVariable String userId) {
-//        return userService.userProfile(userId);
-//    }
+    @GetMapping("/profile/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserInfoDTO getUserProfile(@PathVariable String userId) {
+        return userService.userProfile(userId);
+    }
 }
