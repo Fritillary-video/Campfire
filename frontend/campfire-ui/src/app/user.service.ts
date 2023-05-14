@@ -4,6 +4,8 @@ import { Observable } from "rxjs";
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { VideoDto } from './video-dto';
 import { Router } from '@angular/router';
+import { UserInfoDTO } from './userInfoDTO';
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +42,15 @@ export class UserService {
     return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/subscribed-videos`);
   }
 
+  getUserProfile(userId: string): Observable<UserInfoDTO> {
+    return this.httpClient.get<UserInfoDTO>(`http://localhost:8080/api/user/profile/${userId}`);
+  }
+
+  isSubscribed(userId: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`http://localhost:8080/api/user/isSubscribed/${userId}`);
+  }
+
+
   registerUser() {
     this.oss.userData$.subscribe(userData => {
       this.oss.getAccessToken().subscribe(access => {
@@ -57,8 +68,7 @@ export class UserService {
   }
 
   getUserId(): string {
-    //console.log("in get userId in user servide, userId: "+this.userId);
+    //console.log("in get userId in user service, userId: "+this.userId);
     return this.userId;
   }
 }
- 
