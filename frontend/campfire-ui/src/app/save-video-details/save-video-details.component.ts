@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl} from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VideoDto } from '../video-dto';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 import { UserService } from '../user.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
-  selectedFile! : File;
+  selectedFile!: File;
   selectedFileName = "";
   videoId = '';
   userId = '';
@@ -32,14 +32,15 @@ export class SaveVideoDetailsComponent implements OnInit {
   videoUrl!: string;
   thumbnailUrl!: string;
 
-  constructor(private activatedRoute : ActivatedRoute, private videoService : VideoService, private userService: UserService,
-  private matSnackBar : MatSnackBar, private router: Router){
+  constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService, private userService: UserService,
+    private matSnackBar: MatSnackBar, private router: Router) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
-    this.videoService.getVideo(this.videoId).subscribe(data=>{
+    this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl = data.thumbnailUrl;
       this.videoAvailable = true;
       this.userId = this.userService.getUserId();
+      //console.log(this.userId);
     })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
@@ -47,10 +48,10 @@ export class SaveVideoDetailsComponent implements OnInit {
       videoStatus: this.videoStatus,
     })
 
-    }
+  }
 
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -72,58 +73,48 @@ export class SaveVideoDetailsComponent implements OnInit {
     }
   }
 
-  onFileSelected($event : Event){
+  onFileSelected($event: Event) {
     // @ts-ignore
     this.selectedFile = $event.target.files[0];
     this.selectedFileName = this.selectedFile.name;
     this.fileSelected = true;
   }
 
-  onUpload(){
+  onUpload() {
     this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
-    .subscribe((data: any) => {
-      console.log(data);
-      // show an upload success notification
-      this.matSnackBar.open("Thumbnail Upload Successful", "OK");
-    })
+      .subscribe((data: any) => {
+        console.log(data);
+        // show an upload success notification
+        this.matSnackBar.open("Thumbnail Upload Successful", "OK");
+      })
   }
 
-  saveVideo = async() => {
+  saveVideo = async () => {
     // upload thumbnail to db
     await this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
-        .subscribe(() => {
-          console.log("Thumbnail Upload Successful");
-        })
+      .subscribe(() => {
+        console.log("Thumbnail Upload Successful");
 
-    //Call the video service to make a http call to our backend
-    const videoMetaData: VideoDto = {
-      "id": this.videoId,
-      "title": this.saveVideoDetailsForm.get('title')?.value,
-      "description": this.saveVideoDetailsForm.get('description')?.value,
-      "tags": this.tags,
-      "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
-      "videoUrl":this.videoUrl,
-      "thumbnailUrl": this.thumbnailUrl,
-      "userId": this.userId,
-      "likeCount": 0,
-      "dislikeCount": 0,
-      "viewCount": 0,
-      "datePosted" : new Date().toLocaleDateString(),
-    }
-    console.log("date: "+new Date().toLocaleDateString());
-    this.router.navigateByUrl('/callback');
-
-    await this.videoService.saveVideo(videoMetaData).subscribe(data =>{
-      this.matSnackBar.open("Video Metadata Updated successfully", "OK")
-    });
-
-    // this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
-    //     .subscribe((data: any) => {
-    //       console.log(data);
-    //       // show an upload success notification
-    //       this.matSnackBar.open("Thumbnail Upload Successful", "OK");
-    //       this.router.navigateByUrl('/featured');
-    //     })
+        //Call the video service to make a http call to our backend
+        const videoMetaData: VideoDto = {
+          "id": this.videoId,
+          "title": this.saveVideoDetailsForm.get('title')?.value,
+          "description": this.saveVideoDetailsForm.get('description')?.value,
+          "tags": this.tags,
+          "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
+          "videoUrl": this.videoUrl,
+          "thumbnailUrl": this.thumbnailUrl,
+          "userId": this.userId,
+          "likeCount": 0,
+          "dislikeCount": 0,
+          "viewCount": 0,
+          "datePosted": new Date().toLocaleDateString(),
+        }
+        this.router.navigateByUrl('/callback');
+        this.videoService.saveVideo(videoMetaData).subscribe(data => {
+          this.matSnackBar.open("Video Metadata Updated successfully", "OK")
+        });
+      })
   }
 
   edit(tag: string, event: MatChipEditedEvent) {

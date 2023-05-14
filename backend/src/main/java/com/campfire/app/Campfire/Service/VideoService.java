@@ -48,9 +48,6 @@ public class VideoService {
         savedVideo.setUserId(videoDto.getUserId());
         savedVideo.setDatePosted(videoDto.getDatePosted());
 
-        // this line below errored out
-        // userService.addToOwnedVideos(savedVideo.getId());
-
         // save vid to db
         videoRepository.save(savedVideo);
         return videoDto;
@@ -95,6 +92,7 @@ public class VideoService {
         videoDto.setVideoUrl(video.getVideoUrl());
         videoDto.setThumbnailUrl(video.getThumbnailUrl());
         videoDto.setId(video.getId());
+        videoDto.setUserId(video.getUserId());
         videoDto.setTitle(video.getTitle());
         videoDto.setDescription(video.getDescription());
         videoDto.setTags(video.getTags());
@@ -184,10 +182,5 @@ public class VideoService {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).collect(Collectors.toList());
     }
 
-    public List<VideoDto> getVideosByUserId(String userId) {
-        return videoRepository.findByUserId(userId).stream()
-                .map(this::mapToVideoDto)
-                .collect(Collectors.toList());
-    }
 
 }

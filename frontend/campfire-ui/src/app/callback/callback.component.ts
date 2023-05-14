@@ -11,7 +11,6 @@ export class CallbackComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) {
     this.userService.registerUser();
-    this.router.navigateByUrl('/featured');
   }
 
   ngOnInit(): void {

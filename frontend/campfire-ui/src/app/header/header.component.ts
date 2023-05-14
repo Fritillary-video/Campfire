@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {OidcSecurityService} from "angular-auth-oidc-client"
-import {Router} from "@angular/router";
+import { OidcSecurityService } from "angular-auth-oidc-client"
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -10,27 +10,27 @@ import {Router} from "@angular/router";
 export class HeaderComponent {
 
   isAuthenticated: boolean = false;
-  constructor(private oidcSecurityService: OidcSecurityService, private router: Router){
-
+  constructor(private oidcSecurityService: OidcSecurityService, private router: Router) {
   }
 
-  ngOnInit(): void{
-    this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
-        this.isAuthenticated = isAuthenticated;
+  ngOnInit(): void {
+    this.oidcSecurityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
+      this.isAuthenticated = isAuthenticated;
     })
   }
 
-  home(){
+  home() {
     this.router.navigateByUrl('/featured');
   }
 
   login() {
     this.oidcSecurityService.authorize();
+    // const userData = this.oidcSecurityService.getUserData();
+    // console.log('User Data:', userData);
   }
 
   logout() {
     this.oidcSecurityService.logoffAndRevokeTokens();
     this.oidcSecurityService.logoffLocal();
-
   }
 }
