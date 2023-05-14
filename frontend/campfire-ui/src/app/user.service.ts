@@ -48,7 +48,6 @@ export class UserService {
           this.httpClient.get("http://localhost:8080/api/user/register", { responseType: "text" })
             .subscribe(data => {
               this.userId = data;
-              //console.log("In user Service, userId: "+this.userId);
               this.router.navigateByUrl('/featured');
             });
         }
@@ -57,7 +56,6 @@ export class UserService {
   }
 
   getUserId(): string {
-    //console.log("in get userId in user servide, userId: "+this.userId);
     return this.userId;
   }
 }

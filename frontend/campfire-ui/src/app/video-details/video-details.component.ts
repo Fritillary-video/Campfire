@@ -40,7 +40,7 @@ export class VideoDetailsComponent {
       this.viewCount = data.viewCount;
       this.datePosted = data.datePosted;
       this.uploaderId = data.userId;
-      console.log("userId:" + data.userId);
+      console.log("uploaderId:" + data.userId);
     })
   }
 
