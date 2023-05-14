@@ -25,10 +25,13 @@ export class VideoDetailsComponent {
   showUnsubscribeButton: boolean = false;
   isAuthenticated: boolean = false;
   uploaderId!: string; // new field
+  accountName!: string;
+  subscribers!: number;
 
-  constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
-    private userService: UserService, private oidcSecurityService: OidcSecurityService) {
-    this.videoId = this.activatedRoute.snapshot.params['videoId'];
+
+ constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
+     private userService: UserService, private oidcSecurityService: OidcSecurityService) {
+     this.videoId = this.activatedRoute.snapshot.params['videoId'];
 
      this.videoService.getVideo(this.videoId).subscribe(data => {
        this.videoUrl = data.videoUrl;
@@ -41,6 +44,7 @@ export class VideoDetailsComponent {
        this.viewCount = data.viewCount;
        this.datePosted = data.datePosted;
        this.uploaderId = data.userId;
+       console.log(data.userId);
 
        // Call getUserProfile() after uploaderId is set
        this.userService.getUserProfile(this.uploaderId).subscribe(profileData => {
@@ -53,21 +57,21 @@ export class VideoDetailsComponent {
  }
 
 
-ngOnInit(): void {
-  this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
-    this.isAuthenticated = isAuthenticated;
+
+   ngOnInit(): void {
+     this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
+       this.isAuthenticated = isAuthenticated;
 
 
-    // If the user is authenticated, check if they are subscribed to the video uploader
-    if (this.isAuthenticated) {
-      this.userService.isSubscribed(this.uploaderId).subscribe(isSubscribed => {
-        this.showSubscribeButton = !isSubscribed;
-        this.showUnsubscribeButton = isSubscribed;
-      });
-    }
-  });
-}
-
+       // If the user is authenticated, check if they are subscribed to the video uploader
+       if (this.isAuthenticated) {
+         this.userService.isSubscribed(this.uploaderId).subscribe(isSubscribed => {
+           this.showSubscribeButton = !isSubscribed;
+           this.showUnsubscribeButton = isSubscribed;
+         });
+       }
+     });
+   }
 
   likeVideo() {
     this.videoService.likeVideo(this.videoId).subscribe(data => {
@@ -84,16 +88,21 @@ ngOnInit(): void {
   }
 
   subscribeToUser() {
-    this.userService.subscribeToUser(this.uploaderId).subscribe(data => {
+    const currentUserId = this.userService.getUserId(); // Get the current user's ID
+    const uploaderId = this.uploaderId; // Get the uploader's ID
+    this.userService.subscribeToUser(currentUserId, uploaderId).subscribe(data => {
       this.showSubscribeButton = false;
       this.showUnsubscribeButton = true;
     });
   }
 
   unsubscribeToUser() {
-    this.userService.unsubscribeToUser(this.uploaderId).subscribe(data => {
+    const currentUserId = this.userService.getUserId();
+    const uploaderId = this.uploaderId; // Get the uploader's ID
+    this.userService.unsubscribeToUser(currentUserId, uploaderId).subscribe(data => {
       this.showSubscribeButton = true;
       this.showUnsubscribeButton = false;
     });
   }
+
 }

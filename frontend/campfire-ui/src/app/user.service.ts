@@ -17,13 +17,12 @@ export class UserService {
   constructor(private httpClient: HttpClient, private oss: OidcSecurityService, private router: Router) {
   }
 
-  subscribeToUser(userId: string): Observable<boolean> {
-    console.log(userId);
-    return this.httpClient.post<boolean>("http://localhost:8080/api/user/subscribe/" + userId, null);
+  subscribeToUser(currentUserId: string, userIdToSubscribe: string): Observable<boolean> {
+    return this.httpClient.post<boolean>(`http://localhost:8080/api/user/subscribe/${userIdToSubscribe}`, null);
   }
 
-  unsubscribeToUser(userId: string): Observable<boolean> {
-    return this.httpClient.post<boolean>("http://localhost:8080/api/user/unsubscribe/" + userId, null);
+  unsubscribeToUser(currentUserId: string, userIdToUnsubscribe: string): Observable<boolean> {
+    return this.httpClient.post<boolean>(`http://localhost:8080/api/user/unsubscribe/${userIdToUnsubscribe}`, null);
   }
 
   getHistory(userId: string): Observable<VideoDto[]> {
@@ -42,9 +41,18 @@ export class UserService {
     return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/subscribed-videos`);
   }
 
-  registerUser() {
-    this.oss.userData$.subscribe(userData => {
-      this.oss.getAccessToken().subscribe(access => {
+  getUserProfile(userId: string): Observable<UserInfoDTO> {
+    return this.httpClient.get<UserInfoDTO>(`http://localhost:8080/api/user/profile/${userId}`);
+  }
+
+  isSubscribed(userId: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`http://localhost:8080/api/user/isSubscribed/${userId}`);
+  }
+
+
+   registerUser() {
+     this.oss.userData$.subscribe(userData => {
+       this.oss.getAccessToken().subscribe(access => {
         //console.log("data " + JSON.stringify(access));
         if (access !== null) {
           this.httpClient.get("http://localhost:8080/api/user/register", { responseType: "text" })
@@ -56,10 +64,10 @@ export class UserService {
         }
       });
     });
-  }
+   }
 
-  getUserId(): string {
-    //console.log("in get userId in user service, userId: "+this.userId);
-    return this.userId;
-  }
-}
+   getUserId(): string {
+     //console.log("in get userId in user service, userId: "+this.userId);
+     return this.userId;
+   }
+ }
