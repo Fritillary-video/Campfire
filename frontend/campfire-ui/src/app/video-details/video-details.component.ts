@@ -25,7 +25,8 @@ export class VideoDetailsComponent implements OnInit {
   isAuthenticated: boolean = false;
   uploaderId!: string; // new field
   accountName!: string;
-  subscribers!: number;
+  subscribers: number = 0;
+
 
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
@@ -38,6 +39,7 @@ export class VideoDetailsComponent implements OnInit {
       this.isAuthenticated = isAuthenticated;
 
       this.videoService.getVideo(this.videoId).subscribe(data => {
+      console.log(data);
         this.videoUrl = data.videoUrl;
         this.videoAvailable = true;
         this.videoTitle = data.title;
@@ -50,8 +52,9 @@ export class VideoDetailsComponent implements OnInit {
         this.uploaderId = data.userId;
 
         this.userService.getUserProfile(this.uploaderId).subscribe(profileData => {
+        console.log(profileData);
           this.accountName = profileData.email;
-          this.subscribers = profileData.subscribers.size;
+          this.subscribers = Array.from(profileData.subscribers).length;
 
           if (this.isAuthenticated) {
             this.checkSubscriptionStatus();
