@@ -71,7 +71,6 @@ export class VideoDetailsComponent implements OnInit {
     });
   }
 
-
   likeVideo() {
     this.videoService.likeVideo(this.videoId).subscribe(data => {
       this.likeCount = data.likeCount;

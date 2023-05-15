@@ -92,7 +92,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   saveVideo () {
     // upload thumbnail to db
     this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
-      .subscribe(() => {
+      .subscribe((data) => {
         console.log("Thumbnail Upload Successful");
 
         //Call the video service to make a http call to our backend
@@ -103,7 +103,8 @@ export class SaveVideoDetailsComponent implements OnInit {
           "tags": this.tags,
           "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
           "videoUrl": this.videoUrl,
-          "thumbnailUrl": this.thumbnailUrl,
+          //"thumbnailUrl": this.thumbnailUrl,
+          "thumbnailUrl": data,
           "userId": this.userId,
           "likeCount": 0,
           "dislikeCount": 0,
