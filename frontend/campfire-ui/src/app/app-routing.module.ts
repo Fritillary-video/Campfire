@@ -29,6 +29,9 @@ const routes: Routes = [
       {
         path: 'liked-videos', component: LikedVideosComponent,
       },
+      {
+        path: 'user-profile/:userId', component: UserProfileComponent
+      },
     ]
   },
   {
@@ -42,9 +45,6 @@ const routes: Routes = [
   },
   {
     path: 'callback', component: CallbackComponent,
-  },
-  {
-    path: 'user-profile/:userId', component: UserProfileComponent
   },
 ];
 

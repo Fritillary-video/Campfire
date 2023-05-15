@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { OidcSecurityService } from "angular-auth-oidc-client"
 import { Router } from "@angular/router";
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { Router } from "@angular/router";
 export class HeaderComponent {
 
   isAuthenticated: boolean = false;
-  constructor(private oidcSecurityService: OidcSecurityService, private router: Router) {
+  constructor(private oidcSecurityService: OidcSecurityService, private router: Router, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -32,5 +33,9 @@ export class HeaderComponent {
   logout() {
     this.oidcSecurityService.logoffAndRevokeTokens();
     this.oidcSecurityService.logoffLocal();
+  }
+
+  profile() {
+    this.router.navigateByUrl('/user-profile/' + this.userService.getUserId());
   }
 }

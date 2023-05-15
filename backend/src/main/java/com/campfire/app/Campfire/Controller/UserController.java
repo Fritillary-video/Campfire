@@ -79,4 +79,11 @@ public class UserController {
     public boolean isSubscribed(@PathVariable String userId) {
         return userService.isSubscribed(userId);
     }
+
+    @GetMapping("/{userId}/owned")
+    @ResponseStatus(HttpStatus.OK)
+    public List<VideoDto> getVideosOwned(@PathVariable String userId) {
+        return userService.videosOwned(userId);
+    }
+
 }

@@ -191,6 +191,7 @@ public class UserService {
         userInfoDTO.setName(user.getFullName());
         userInfoDTO.setEmail(user.getEmailAddress());
         userInfoDTO.setSubscribers(user.getSubscribers());
+        userInfoDTO.setPicture(user.getPicture());
 
         return userInfoDTO;
     }
@@ -201,4 +202,14 @@ public class UserService {
         return currentUser.getSubscribedToUsers().contains(userId);
     }
 
+    public List<VideoDto> videosOwned(String userId) {
+        List<VideoDto> videoDtos = new ArrayList<>();
+            List<Video> videos = videoRepository.findByUserId(userId);
+
+            for (Video video : videos) {
+                VideoDto videoDto = convertToDto(video);
+                videoDtos.add(videoDto);
+            }
+        return videoDtos;
+    }
 }

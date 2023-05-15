@@ -1,5 +1,11 @@
 <div fxLayout="row wrap">
-  <h3>User Profile</h3>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image" [style.backgroundImage]="'url(' + userProfile.picture + ')'"></div>
+      <mat-card-title>{{ userProfile.email }}</mat-card-title>
+      <mat-card-subtitle>Subscribers: {{ subscribers }}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
 </div>
 
 <div fxLayout="row wrap" fxLayoutGap="12px grid">
@@ -7,4 +13,3 @@
     <app-video-card [video]="userOwnedVideo"></app-video-card>
   </div>
 </div>
-

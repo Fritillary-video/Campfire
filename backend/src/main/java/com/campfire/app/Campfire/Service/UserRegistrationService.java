@@ -55,6 +55,7 @@ public class UserRegistrationService {
                 user.setFullName(userInfoDTO.getName());
                 user.setEmailAddress(userInfoDTO.getEmail());
                 user.setSub(userInfoDTO.getSub());
+                user.setPicture(userInfoDTO.getPicture());
 
                 return userRepository.save(user).getId();
             }

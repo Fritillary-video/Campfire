@@ -42,6 +42,9 @@ import { CallbackComponent } from './callback/callback.component';
 import { CommentsComponent } from './comments/comments.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -90,6 +93,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     MatListModule,
     MatCardModule,
     MatMenuModule,
+    MatTooltipModule,
+    MatExpansionModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}
