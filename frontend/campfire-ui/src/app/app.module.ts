@@ -64,7 +64,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     VideoCardComponent,
     CallbackComponent,
     CommentsComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
