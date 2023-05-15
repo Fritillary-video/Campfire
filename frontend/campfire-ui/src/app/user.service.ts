@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { VideoDto } from './video-dto';
 import { Router } from '@angular/router';
-import { UserInfoDTO } from './user-into-dto';
+import { UserInfoDTO } from './user-info-dto';
 
 @Injectable({
   providedIn: 'root'

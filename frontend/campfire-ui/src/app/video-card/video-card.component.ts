@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { VideoDto } from '../video-dto';
 import { UserService } from '../user.service';
-import { UserInfoDTO } from '../user-into-dto';
+//import { UserInfoDTO } from '../user-into-dto';
 import { SimpleChanges } from '@angular/core';
 
 
