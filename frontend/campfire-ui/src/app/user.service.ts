@@ -30,6 +30,10 @@ export class UserService {
     return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/history`);
   }
 
+  getUserOwned(userId: string): Observable<VideoDto[]> {
+    return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/owned`);
+  }
+
   getLikedVideos(userId: string): Observable<VideoDto[]> {
     return this.httpClient.get<VideoDto[]>(`http://localhost:8080/api/user/${userId}/liked-videos`);
   }
