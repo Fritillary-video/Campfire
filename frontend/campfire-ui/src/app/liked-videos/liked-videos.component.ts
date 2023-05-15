@@ -19,5 +19,4 @@ export class LikedVideosComponent {
         this.likedVideos = response;
       });
   }
-
 }
