@@ -9,6 +9,8 @@ import { HistoryComponent } from './history/history.component';
 import { LikedVideosComponent } from './liked-videos/liked-videos.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { CallbackComponent } from './callback/callback.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 
 
 const routes: Routes = [
@@ -26,6 +28,9 @@ const routes: Routes = [
       },
       {
         path: 'liked-videos', component: LikedVideosComponent,
+      },
+      {
+        path: 'user-profile/:userId', component: UserProfileComponent
       },
     ]
   },
