@@ -68,6 +68,11 @@ export class VideoDetailsComponent implements OnInit {
     });
   }
 
+  searchBasedOnTag(tag : string) : void {
+    //search(tag)
+
+  }
+
   checkSubscriptionStatus(): void {
     this.userService.isSubscribed(this.uploaderId).subscribe(isSubscribed => {
       this.showSubscribeButton = !isSubscribed;

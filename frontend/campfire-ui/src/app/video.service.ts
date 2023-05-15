@@ -50,4 +50,7 @@ export class VideoService {
     return this.httpClient.post<VideoDto>(this.apiUrl + "/api/videos/" + videoId+"/dislike",null);
   }
 
+  search(searchTerm : string) : Observable<Array<VideoDto>>{
+    return this.httpClient.get<Array<VideoDto>>(this.apiUrl+"/searchResults/"+searchTerm);
+  }
 }

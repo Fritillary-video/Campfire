@@ -4,7 +4,7 @@
       <app-video-player *ngIf="videoAvailable" [videoUrl]="videoUrl" class="video-player-app"></app-video-player>
       <mat-divider></mat-divider>
       <div fxLayout="row">
-        <div fxLayout="column"> <mat-card-title>Title: {{videoTitle}} </mat-card-title>
+        <div fxLayout="column"> <mat-card-title>{{videoTitle}} </mat-card-title>
           <mat-card-subtitle class="subtitles">Uploaded by: {{accountName}}</mat-card-subtitle>
 
           <mat-card-subtitle class="subtitles">{{subscribers}} {{subscribers == 1 ? 'Subscriber' : 'Subscribers'}}</mat-card-subtitle>
@@ -36,7 +36,7 @@
       <mat-divider></mat-divider>
       <div fxLayout="row">
         <mat-chip-grid *ngFor="let tag of tags">
-          <mat-chip>{{tag}}</mat-chip>
+          <mat-chip (click)="searchBasedOnTag(tag)">{{tag}}</mat-chip>
         </mat-chip-grid>
       </div>
       <mat-divider></mat-divider>
