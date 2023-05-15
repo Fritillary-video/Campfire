@@ -41,6 +41,7 @@ import { MatCardModule } from "@angular/material/card";
 import { CallbackComponent } from './callback/callback.component';
 import { CommentsComponent } from './comments/comments.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 
 @NgModule({
@@ -89,7 +90,6 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule,
     MatCardModule,
     MatMenuModule,
-    MatTooltipModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}
