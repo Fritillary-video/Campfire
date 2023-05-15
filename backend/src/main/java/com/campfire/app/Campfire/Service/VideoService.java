@@ -3,7 +3,7 @@ package com.campfire.app.Campfire.Service;
 import com.campfire.app.Campfire.Model.Comment;
 import com.campfire.app.Campfire.Model.Video;
 import com.campfire.app.Campfire.Repository.VideoRepository;
-import com.campfire.app.Campfire.dto.CommentDto;
+import com.campfire.app.Campfire.dto.CommentDTO;
 import com.campfire.app.Campfire.dto.UploadVideoResponse;
 import com.campfire.app.Campfire.dto.VideoDto;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +47,8 @@ public class VideoService {
         savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setDescription(videoDto.getDescription());
+        savedVideo.setUserId(videoDto.getUserId());
+        savedVideo.setDatePosted(videoDto.getDatePosted());
 
         // save vid to db
         videoRepository.save(savedVideo);
@@ -92,6 +94,7 @@ public class VideoService {
         videoDto.setVideoUrl(video.getVideoUrl());
         videoDto.setThumbnailUrl(video.getThumbnailUrl());
         videoDto.setId(video.getId());
+        videoDto.setUserId(video.getUserId());
         videoDto.setTitle(video.getTitle());
         videoDto.setDescription(video.getDescription());
         videoDto.setTags(video.getTags());
@@ -99,6 +102,7 @@ public class VideoService {
         videoDto.setLikeCount(video.getLikes().get());
         videoDto.setDislikeCount(video.getDislikes().get());
         videoDto.setViewCount(video.getViewCount().get());
+        videoDto.setDatePosted(video.getDatePosted());
         return videoDto;
     }
 
@@ -154,7 +158,7 @@ public class VideoService {
         return mapToVideoDto(videoById);
     }
 
-    public void addComment(String videoId, CommentDto commentDto) {
+    public void addComment(String videoId, CommentDTO commentDto) {
         Video video = getVideoById(videoId);
         Comment comment = new Comment();
         comment.setText(commentDto.getCommentText());
@@ -163,14 +167,14 @@ public class VideoService {
         videoRepository.save(video);
     }
 
-    public List<CommentDto> getAllComments(String videoId) {
+    public List<CommentDTO> getAllComments(String videoId) {
         Video video = getVideoById(videoId);
         List<Comment> commentList = video.getCommentList();
         return commentList.stream().map(this::mapToCommentDto).collect(Collectors.toList());
     }
 
-    private CommentDto mapToCommentDto(Comment comment) {
-        CommentDto commentDto = new CommentDto();
+    private CommentDTO mapToCommentDto(Comment comment) {
+        CommentDTO commentDto = new CommentDTO();
         commentDto.setCommentText(comment.getText());
         commentDto.setAuthorId(comment.getAuthorId());
         return commentDto;
@@ -192,4 +196,6 @@ public class VideoService {
     public List<VideoDto> getAllVideos() {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).collect(Collectors.toList());
     }
+
+
 }

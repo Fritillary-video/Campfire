@@ -2,6 +2,7 @@ export interface VideoDto{
   id: string;
   title: string;
   description: string;
+  userId: string;
   tags: Array<string>;
   videoUrl: string;
   videoStatus: string;
@@ -9,4 +10,5 @@ export interface VideoDto{
   likeCount: number;
   dislikeCount: number;
   viewCount: number;
+  datePosted : string;
 }

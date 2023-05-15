@@ -24,7 +24,6 @@ export class VideoService {
     return this.httpClient.post<UploadVideoResponse>(this.apiUrl + "/api/videos/", formData);
   }
 
-
   uploadThumbnail(fileEntry: File, videoId : string) : Observable<string>{
       const formData = new FormData();
       formData.append('file', fileEntry, fileEntry.name);

@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import { CommentsService } from '../comments.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommentDto } from '../comment-dto';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-comments',
@@ -16,9 +17,10 @@ export class CommentsComponent {
   videoId : string = '';
   commentsForm : FormGroup;
   commentsDto : CommentDto[] = [];
+  isAuthenticated: boolean = false;
 
   constructor(private userService : UserService, private commentsService : CommentsService,
-    private matSnackBar : MatSnackBar){
+    private matSnackBar : MatSnackBar, private oidcSecurityService: OidcSecurityService){
 
     this.commentsForm = new FormGroup({
       comment: new FormControl('comment'),
@@ -27,6 +29,9 @@ export class CommentsComponent {
   }
 
   ngOnInit() : void {
+    this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
+      this.isAuthenticated = isAuthenticated;
+  })
     this.getComments();
   }
 

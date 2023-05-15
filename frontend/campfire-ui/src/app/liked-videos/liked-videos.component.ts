@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+import { VideoDto } from '../video-dto';
 
 @Component({
   selector: 'app-liked-videos',
@@ -7,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class LikedVideosComponent {
 
+  likedVideos: Array<VideoDto> = [];
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+      const userId = this.userService.getUserId();
+      this.userService.getLikedVideos(userId).subscribe(response => {
+        this.likedVideos = response;
+      });
+  }
 }
