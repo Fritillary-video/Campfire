@@ -1,12 +1,21 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>CampFire</span>
+    <span (click)="home()" matTooltip="Home" class="example-text">CampFire</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <button *ngIf="isAuthenticated" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            routerLink="/upload-video" matTooltip="upload video">
       <mat-icon>video_call</mat-icon>
     </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>account_circle</mat-icon>
+    <button *ngIf="isAuthenticated; else noAuth" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+    [matMenuTriggerFor]="menu">
+      <mat-icon >account_circle</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="profile()">Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
     </button>
+    <ng-template #noAuth>
+    <button mat-raised-button (click)="login()">Login</button>
+    </ng-template>
   </mat-toolbar-row>
 </mat-toolbar>

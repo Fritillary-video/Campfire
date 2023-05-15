@@ -1,0 +1,11 @@
+<div fxLayout="row wrap">
+  <h3>Liked Videos</h3>
+</div>
+
+<!-- <div fxLayout="row wrap" fxLayoutGap="12px grid"> -->
+  <div class="like-video-comp">
+
+  <div class="video-card" *ngFor="let likedVideosVideo of likedVideos">
+    <app-video-card [video]="likedVideosVideo"></app-video-card>
+  </div>
+</div>

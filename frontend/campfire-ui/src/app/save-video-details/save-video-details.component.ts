@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl} from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ActivatedRoute } from '@angular/router';
+import { VideoService } from '../video.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { VideoDto } from '../video-dto';
+import { Router } from "@angular/router";
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-save-video-details',
@@ -13,22 +19,39 @@ export class SaveVideoDetailsComponent implements OnInit {
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
+  videoAvailable: boolean = false;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
+  selectedFile!: File;
+  selectedFileName = "";
+  videoId = '';
+  userId = '';
+  fileSelected = false;
+  videoUrl!: string;
+  thumbnailUrl!: string;
 
-  constructor(){
+  constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService, private userService: UserService,
+    private matSnackBar: MatSnackBar, private router: Router) {
+    this.videoId = this.activatedRoute.snapshot.params['videoId'];
+    this.videoService.getVideo(this.videoId).subscribe(data => {
+      this.videoUrl = data.videoUrl;
+      this.thumbnailUrl = data.thumbnailUrl;
+      this.videoAvailable = true;
+      this.userId = this.userService.getUserId();
+      //console.log(this.userId);
+    })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
       description: this.description,
       videoStatus: this.videoStatus,
     })
-  
-    }
-  
-    ngOnInit(): void {
-    }
+
+  }
+
+  ngOnInit(): void {
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -50,16 +73,61 @@ export class SaveVideoDetailsComponent implements OnInit {
     }
   }
 
+  onFileSelected($event: Event) {
+    // @ts-ignore
+    this.selectedFile = $event.target.files[0];
+    this.selectedFileName = this.selectedFile.name;
+    this.fileSelected = true;
+  }
+
+  onUpload() {
+    this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+      .subscribe((data: any) => {
+        console.log(data);
+        // show an upload success notification
+        this.matSnackBar.open("Thumbnail Upload Successful", "OK");
+      })
+  }
+
+  saveVideo () {
+    // upload thumbnail to db
+    this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+      .subscribe((data) => {
+        console.log("Thumbnail Upload Successful");
+
+        //Call the video service to make a http call to our backend
+        const videoMetaData: VideoDto = {
+          "id": this.videoId,
+          "title": this.saveVideoDetailsForm.get('title')?.value,
+          "description": this.saveVideoDetailsForm.get('description')?.value,
+          "tags": this.tags,
+          "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
+          "videoUrl": this.videoUrl,
+          //"thumbnailUrl": this.thumbnailUrl,
+          "thumbnailUrl": data,
+          "userId": this.userId,
+          "likeCount": 0,
+          "dislikeCount": 0,
+          "viewCount": 0,
+          "datePosted": new Date().toLocaleDateString(),
+        }
+        this.router.navigateByUrl('/callback');
+        this.videoService.saveVideo(videoMetaData).subscribe(data => {
+          this.matSnackBar.open("Video Metadata Updated successfully", "OK")
+        });
+      })
+  }
+
   edit(tag: string, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
-    // Remove fruit if it no longer has a name
+    // Remove tag if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
 
-    // Edit existing fruit
+    // Edit existing tag
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags[index] = value;

@@ -1,0 +1,26 @@
+.example-card {
+  width: 350px;
+  height: 400px;
+}
+
+.card-image {
+  object-fit: cover;
+  width: 350px;
+  height: 300px;
+}
+
+.example-header-image {
+  /* background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg'); */
+  padding-top: 15%;
+  size: 200%;
+  background-size: cover;
+  font-size: 250%;
+  height: 250%;
+  width: 250%;
+}
+
+.example-card:hover {
+  cursor: pointer;
+  background-color: #f0f0f0; /* This will change the card's background color when hovered */
+}
+

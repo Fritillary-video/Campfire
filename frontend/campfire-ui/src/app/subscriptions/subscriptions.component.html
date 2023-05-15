@@ -1,0 +1,11 @@
+<div fxLayout="row wrap">
+  <h3>Subscription Videos</h3>
+</div>
+
+<!-- <div fxLayout="row wrap" fxLayoutGap="12px grid"> -->
+  <div class="subscriptions-comp">
+
+  <div class="video-card"  *ngFor="let subscriptionVideosVideo of subscriptionVideos">
+    <app-video-card [video]="subscriptionVideosVideo"></app-video-card>
+  </div>
+</div>

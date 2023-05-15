@@ -1,0 +1,11 @@
+<div fxLayout="row wrap">
+  <h3>User History</h3>
+</div>
+
+<!-- <div fxLayout="row wrap" fxLayoutGap="12px grid"> -->
+  <div class="history-comp">
+
+  <div class="video-card" *ngFor="let historyVideo of history">
+    <app-video-card [video]="historyVideo"></app-video-card>
+  </div>
+</div>

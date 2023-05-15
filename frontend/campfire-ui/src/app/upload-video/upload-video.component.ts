@@ -65,8 +65,7 @@ export class UploadVideoComponent {
 
   public uploadVideo(){
   if(this.fileEntry !== undefined){
-    console.log(this.fileEntry);
-
+    //console.log(this.fileEntry);
     this.fileEntry.file( file => {
          this.videoService.uploadVideo(file).subscribe( data => {
             //console.log("Video uploaded successfully");
