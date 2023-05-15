@@ -11,7 +11,9 @@ export class HistoryComponent implements OnInit {
 
   history: Array<VideoDto> = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+   userService.idCheck();
+   }
 
   ngOnInit(): void {
       const userId = this.userService.getUserId();

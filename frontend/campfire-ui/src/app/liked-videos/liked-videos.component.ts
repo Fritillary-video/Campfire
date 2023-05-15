@@ -11,7 +11,10 @@ export class LikedVideosComponent {
 
   likedVideos: Array<VideoDto> = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+    userService.idCheck();
+
+   }
 
   ngOnInit(): void {
       const userId = this.userService.getUserId();

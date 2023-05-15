@@ -59,6 +59,7 @@ export class UserService {
           this.httpClient.get("http://localhost:8080/api/user/register", { responseType: "text" })
             .subscribe(data => {
               this.userId = data;
+              document.cookie = "uid=" + data;
               //console.log("In user Service, userId: "+this.userId);
               this.router.navigateByUrl('/featured');
             });
@@ -70,5 +71,14 @@ export class UserService {
    getUserId(): string {
      //console.log("in get userId in user service, userId: "+this.userId);
      return this.userId;
+   }
+
+   idCheck(){
+     const value = `; ${document.cookie}`;
+     const parts = value.split(`; uid=`);
+     //console.log("ran idCheck");
+     if (parts.length === 2) {
+       this.userId = parts.pop()!.split(';').shift()!;
+     }
    }
  }

@@ -11,7 +11,10 @@ export class SubscriptionsComponent {
 
  subscriptionVideos: Array<VideoDto> = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+    userService.idCheck();
+
+   }
 
   ngOnInit(): void {
       const userId = this.userService.getUserId();

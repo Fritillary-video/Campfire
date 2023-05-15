@@ -31,6 +31,7 @@ export class VideoDetailsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
     private userService: UserService, private oidcSecurityService: OidcSecurityService) {
+    this.userService.idCheck();
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
   }
 
