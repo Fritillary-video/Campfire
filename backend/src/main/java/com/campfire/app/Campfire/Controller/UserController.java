@@ -1,6 +1,7 @@
 package com.campfire.app.Campfire.Controller;
 
 import com.campfire.app.Campfire.Service.UserService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -47,4 +48,5 @@ public class UserController {
     public Set<String> userHistory(@PathVariable String userId) {
         return userService.userHistory(userId);
     }
+
 }

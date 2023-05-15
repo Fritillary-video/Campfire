@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +24,7 @@ public class VideoService {
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
     private final UserService userService;
+    private Set<String> foundVideos;
 
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile) {
         // Upload file to AWS S3
@@ -172,6 +174,19 @@ public class VideoService {
         commentDto.setCommentText(comment.getText());
         commentDto.setAuthorId(comment.getAuthorId());
         return commentDto;
+    }
+
+    public Set<String> searchForVideos(String search){
+        search = search.trim();
+        String[] actualSearch = search.split(" ");
+        for (VideoDto videoData : getAllVideos()) {
+            for (String string : actualSearch) {
+                if(videoData.getTitle().contains(string)){
+                    foundVideos.add(videoData.getVideoUrl());
+                }
+            }
+        }
+        return foundVideos;
     }
 
     public List<VideoDto> getAllVideos() {
