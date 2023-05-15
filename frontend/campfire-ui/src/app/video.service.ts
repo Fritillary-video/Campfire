@@ -55,6 +55,6 @@ export class VideoService {
   }
 
   search(searchTerm : string) : Observable<Array<VideoDto>>{
-    return this.httpClient.get<Array<VideoDto>>(this.apiUrl+"/searchResults/"+searchTerm);
+    return this.httpClient.get<Array<VideoDto>>(this.apiUrl+"/api/videos/searchResults/"+searchTerm);
   }
 }

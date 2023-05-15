@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VideoService } from '../video.service';
 import { UserService } from '../user.service';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { VideoDto } from '../video-dto';
 
 @Component({
   selector: 'app-video-details',
@@ -26,11 +27,13 @@ export class VideoDetailsComponent implements OnInit {
   uploaderId!: string; // new field
   accountName!: string;
   subscribers: number = 0;
+  searchedResults! : Array<VideoDto>;
 
 
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
-    private userService: UserService, private oidcSecurityService: OidcSecurityService) {
+    private userService: UserService, private oidcSecurityService: OidcSecurityService,
+    private router : Router) {
     this.userService.idCheck();
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
   }
@@ -69,8 +72,9 @@ export class VideoDetailsComponent implements OnInit {
   }
 
   searchBasedOnTag(tag : string) : void {
-    //search(tag)
-
+    console.log("in vid details")
+   this.router.navigateByUrl('/search/'+tag);
+   console.log("after router");
   }
 
   checkSubscriptionStatus(): void {

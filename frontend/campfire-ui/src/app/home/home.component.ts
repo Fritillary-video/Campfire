@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
 export class HomeComponent implements OnInit{
 
   constructor(private router: Router, private userService: UserService) {
-    this.router.navigateByUrl('/featured');
+    //this.router.navigateByUrl('/featured');
   }
   ngOnInit(): void {
   }
