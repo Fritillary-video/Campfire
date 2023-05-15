@@ -42,6 +42,7 @@ import { CallbackComponent } from './callback/callback.component';
 import { CommentsComponent } from './comments/comments.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FeaturedComponent,
     VideoCardComponent,
     CallbackComponent,
-    CommentsComponent
+    CommentsComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
