@@ -89,9 +89,9 @@ export class SaveVideoDetailsComponent implements OnInit {
       })
   }
 
-  saveVideo = async () => {
+  saveVideo () {
     // upload thumbnail to db
-    await this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
+    this.videoService.uploadThumbnail(this.selectedFile, this.videoId)
       .subscribe(() => {
         console.log("Thumbnail Upload Successful");
 

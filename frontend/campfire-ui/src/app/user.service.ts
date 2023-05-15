@@ -4,8 +4,7 @@ import { Observable } from "rxjs";
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { VideoDto } from './video-dto';
 import { Router } from '@angular/router';
-import { UserInfoDTO } from './userInfoDTO';
-
+import { UserInfoDTO } from './user-info-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,8 @@ import { UserInfoDTO } from './userInfoDTO';
 export class UserService {
 
   private userId: string = '';
+
+  private temp! : UserInfoDTO;
 
   constructor(private httpClient: HttpClient, private oss: OidcSecurityService, private router: Router) {
   }
