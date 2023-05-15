@@ -1,12 +1,12 @@
 .example-card {
-  width: 20vw;
-  height: 40vh;
+  width: 350px;
+  height: 400px;
 }
 
 .card-image {
   object-fit: cover;
-  width: 20vw;
-  height: 30vh;
+  width: 350px;
+  height: 300px;
 }
 
 .example-header-image {

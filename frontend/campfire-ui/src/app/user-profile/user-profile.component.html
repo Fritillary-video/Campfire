@@ -1,0 +1,10 @@
+<div fxLayout="row wrap">
+  <h3>User Profile</h3>
+</div>
+
+<div fxLayout="row wrap" fxLayoutGap="12px grid">
+  <div fxFlex="25%" *ngFor="let userOwnedVideo of userOwned">
+    <app-video-card [video]="userOwnedVideo"></app-video-card>
+  </div>
+</div>
+
