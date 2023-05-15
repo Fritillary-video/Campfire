@@ -51,8 +51,8 @@ export class VideoDetailsComponent {
          this.accountName = profileData.email;
          this.subscribers = profileData.subscribers.size;
          this.userService.isSubscribed(this.userService.getUserId()).subscribe(isSubscribed => {
-                  this.showSubscribeButton = !isSubscribed;
-                  this.showUnsubscribeButton = isSubscribed;
+                  this.showSubscribeButton = isSubscribed;
+                  this.showUnsubscribeButton = !isSubscribed;
                   console.log(isSubscribed);
                 });
        });
