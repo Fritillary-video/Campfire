@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
 import { UserService } from '../user.service';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { UserInfoDTO } from '../userInfoDTO';
+import { UserInfoDTO } from '../user-into-dto';
 
 @Component({
   selector: 'app-video-details',
