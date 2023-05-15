@@ -34,6 +34,8 @@ export class VideoDetailsComponent implements OnInit {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
   }
 
+  //put this method which runs at runtime to be before we load in video info and user info to make
+  //subscribe button to retain its pressed state
   ngOnInit(): void {
     this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
       this.isAuthenticated = isAuthenticated;
