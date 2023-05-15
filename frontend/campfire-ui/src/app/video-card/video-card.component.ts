@@ -24,7 +24,7 @@ export class VideoCardComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['video'] && this.video) {
       this.userService.getUserProfile(this.video.userId)
-        .subscribe(userInfo => this.userEmail = userInfo.email);
+        .subscribe(userInfo => this.userEmail = userInfo.email.split('@').shift()!);
     }
   }
 }
