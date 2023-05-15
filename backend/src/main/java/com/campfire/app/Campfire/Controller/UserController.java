@@ -13,7 +13,6 @@ import com.campfire.app.Campfire.Service.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/user")

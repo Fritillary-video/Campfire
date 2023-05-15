@@ -57,7 +57,7 @@ export class VideoDetailsComponent implements OnInit {
         this.userService.getUserProfile(this.uploaderId).subscribe(profileData => {
         console.log(profileData);
         console.log("in video details, user Id: "+this.uploaderId);
-          this.accountName = profileData.email;
+          this.accountName = profileData.email.split('@').shift()!;
           this.subscribers = Array.from(profileData.subscribers).length;
 
           if (this.isAuthenticated) {

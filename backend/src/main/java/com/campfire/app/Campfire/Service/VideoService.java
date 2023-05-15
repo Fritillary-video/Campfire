@@ -14,7 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +25,7 @@ public class VideoService {
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
     private final UserService userService;
+    private Set<VideoDto> foundVideos = new HashSet<>();
 
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile) {
         // Upload file to AWS S3
@@ -176,6 +179,21 @@ public class VideoService {
         commentDto.setCommentText(comment.getText());
         commentDto.setAuthorId(comment.getAuthorId());
         return commentDto;
+    }
+
+    public Set<VideoDto> searchForVideos(String search){
+        search = search.trim();
+        String[] words = search.split(" ");
+        return getAllVideos().stream().filter((video) -> {
+            for(String word : words){
+                if(video.getTitle().toLowerCase().contains(word.toLowerCase())){
+                    return true;
+                }else if(video.getTags().contains(word.toLowerCase()) || video.getTags().contains(word)){
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toSet());
     }
 
     public List<VideoDto> getAllVideos() {

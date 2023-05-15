@@ -191,6 +191,7 @@ public class UserService {
         userInfoDTO.setName(user.getFullName());
         userInfoDTO.setEmail(user.getEmailAddress());
         userInfoDTO.setSubscribers(user.getSubscribers());
+        userInfoDTO.setPicture(user.getPicture());
 
         return userInfoDTO;
     }

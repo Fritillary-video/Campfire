@@ -38,6 +38,10 @@ export class VideoService {
     return this.httpClient.get<VideoDto>(this.apiUrl + "/api/videos/" + videoId);
   }
 
+  getSearchResults(): Observable<Array<String>>{
+    return this.httpClient.get<Array<String>>(this.apiUrl+ "/api/searchresults/")
+  }
+
   getAllVideos(): Observable<Array<VideoDto>> {
     return this.httpClient.get<Array<VideoDto>>(this.apiUrl + "/api/videos/");
   }

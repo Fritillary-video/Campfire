@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/videos")
@@ -72,5 +73,10 @@ public class VideoController {
         return videoService.getAllVideos();
     }
 
+    @GetMapping("/searchResults/{search}")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<VideoDto> searchResults(@PathVariable String search){
+        return videoService.searchForVideos(search);
+    }
 
 }
