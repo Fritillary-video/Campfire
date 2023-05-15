@@ -7,7 +7,7 @@
         <div fxLayout="column"> <mat-card-title>Title: {{videoTitle}} </mat-card-title>
           <mat-card-subtitle class="subtitles">Uploaded by: {{accountName}}</mat-card-subtitle>
 
-          <mat-card-subtitle class="subtitles">{{subscribers}} Subscribers</mat-card-subtitle>
+          <mat-card-subtitle class="subtitles">{{subscribers}} {{subscribers == 1 ? 'Subscriber' : 'Subscribers'}}</mat-card-subtitle>
           <div fxFlex="50%">
             <span class="view-count">{{viewCount}} views</span>
             <span class="dot"></span>
