@@ -18,3 +18,9 @@
   height: 250%;
   width: 250%;
 }
+
+.example-card:hover {
+  cursor: pointer;
+  background-color: #f0f0f0; /* This will change the card's background color when hovered */
+}
+

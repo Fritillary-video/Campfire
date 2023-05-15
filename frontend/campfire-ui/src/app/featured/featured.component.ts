@@ -21,4 +21,8 @@ export class FeaturedComponent implements OnInit{
     });
   }
 
+  isPublic(video: VideoDto): boolean{
+    return video.videoStatus === "PUBLIC";
+  }
+
 }
