@@ -159,12 +159,6 @@ public class UserService {
         return videoDtos;
     }
 
-    public void addToOwnedVideos(String videoId) {
-        User currentUser = getCurrentUser();
-        // currentUser.addToOwnedVideos(videoId);
-        userRepository.save(currentUser);
-    }
-
     public List<VideoDto> subscribedVideos(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
@@ -199,6 +193,12 @@ public class UserService {
         userInfoDTO.setSubscribers(user.getSubscribers());
 
         return userInfoDTO;
+    }
+
+
+    public boolean isSubscribed(String userId) {
+        User currentUser = getCurrentUser();
+        return currentUser.getSubscribedToUsers().contains(userId);
     }
 
 }
