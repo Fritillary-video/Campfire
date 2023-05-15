@@ -43,6 +43,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatCardModule,
     MatMenuModule,
     MatTooltipModule,
+    MatExpansionModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}
