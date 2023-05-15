@@ -73,9 +73,9 @@ public class VideoController {
         return videoService.getAllVideos();
     }
 
-    @GetMapping("/searchResults")
+    @GetMapping("/searchResults/{search}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<String> searchResults(String search){
+    public Set<VideoDto> searchResults(@PathVariable String search){
         return videoService.searchForVideos(search);
     }
 
