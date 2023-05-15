@@ -10,6 +10,7 @@
     [matMenuTriggerFor]="menu">
       <mat-icon >account_circle</mat-icon>
       <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="profile()">Profile</button>
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </button>
