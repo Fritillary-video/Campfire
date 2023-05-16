@@ -200,5 +200,8 @@ public class VideoService {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).collect(Collectors.toList());
     }
 
+    public void deleteVideo(String videoId) {
+        videoRepository.deleteById(videoId);
+    }
 
 }

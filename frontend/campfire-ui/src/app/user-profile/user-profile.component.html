@@ -6,10 +6,24 @@
       <mat-card-subtitle>Subscribers: {{ subscribers }}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
+  <button mat-raised-button color="primary" (click)="goToUploadVideo()"
+          *ngIf="userId === userService.getUserId()">Upload Video</button>
+
+  <button *ngIf="showSubscribeButton && isAuthenticated && userId !== userService.getUserId()"
+          mat-raised-button color="warn" (click)="subscribeToUser()">
+    SUBSCRIBE
+  </button>
+
+  <button *ngIf="showUnsubscribeButton && isAuthenticated && userId !== userService.getUserId()"
+          mat-raised-button color="accent" (click)="unsubscribeToUser()">
+    UNSUBSCRIBED
+  </button>
+
 </div>
 
 <div fxLayout="row wrap" fxLayoutGap="12px grid">
   <div fxFlex="25%" *ngFor="let userOwnedVideo of userOwned">
     <app-video-card [video]="userOwnedVideo"></app-video-card>
+    <button mat-raised-button color="warn" *ngIf="userId === userService.getUserId()" (click)="deleteVideo(userOwnedVideo.id)">Delete</button>
   </div>
 </div>

@@ -79,4 +79,11 @@ public class VideoController {
         return videoService.searchForVideos(search);
     }
 
+    @DeleteMapping("/{videoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVideo(@PathVariable String videoId){
+        videoService.deleteVideo(videoId);
+    }
+
+
 }
