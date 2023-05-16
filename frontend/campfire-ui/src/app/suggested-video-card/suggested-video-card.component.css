@@ -1,6 +1,6 @@
-.example-card {
-    width: 350px;
-    height: 400px;
+  .example-card {
+    width: 400px;
+    height: 100px;
     position: relative;
     transition: transform 0.3s;
   }
@@ -12,18 +12,18 @@
   
   .card-image {
     object-fit: cover;
-    width: 350px;
-    height: 300px;
+    width: 100px;
+    height: 100px;
   }
   
   .example-header-image {
     /* background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg'); */
     padding-top: 15%;
-    size: 200%;
+    size: 100%;
     background-size: cover;
     font-size: 250%;
-    height: 250%;
-    width: 250%;
+    height: 100%;
+    width: 100%;
   }
   
   .example-card:hover {

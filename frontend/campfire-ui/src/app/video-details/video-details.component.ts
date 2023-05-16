@@ -90,10 +90,7 @@ export class VideoDetailsComponent implements OnInit {
         //   }})
         // });
       });
-
-      
   }
-
   searchBasedOnTag(tag : string) : void {
    this.router.navigateByUrl('/search/'+tag);
   }

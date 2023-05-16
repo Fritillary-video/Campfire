@@ -52,9 +52,14 @@
   </div>
   <div fxFlex="5%"></div>
   <div fxFlex="30%" class="suggestion-bar">
-    <h3>Similar videos you might like:</h3>
+    <h3><b>Similar videos you might like:</b></h3>
     <div  class="suggested-video-card" *ngFor="let suggestedVideo of suggestedVideos">
-      <app-video-card (click)= "videoRedirect(suggestedVideo.id)"[video]="suggestedVideo"></app-video-card>
+      <app-suggested-video-card (click)= "videoRedirect(suggestedVideo.id)"[video]="suggestedVideo"></app-suggested-video-card>
   </div>
+  <style>
+    div{
+      padding-bottom: 25px;
+    }
+  </style>
   </div>
 </div>
