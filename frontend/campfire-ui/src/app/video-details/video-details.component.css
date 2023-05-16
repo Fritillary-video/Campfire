@@ -57,3 +57,20 @@ mat-card[ng-reflect-router-link] {
   width: 900px;
   height: 500px;
 }
+
+.profile-link {
+  display: inline-block;
+  padding: 6px 12px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.profile-link:hover {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  transform: scale(1.05);
+}
