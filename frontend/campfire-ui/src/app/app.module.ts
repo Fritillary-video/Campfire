@@ -47,6 +47,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { SuggestedVideoCardComponent } from './suggested-video-card/suggested-video-card.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     SearchResultsComponent,
     UserProfileComponent,
     ConfirmDialogComponent,
+    SuggestedVideoCardComponent,
   ],
   imports: [
     BrowserModule,
