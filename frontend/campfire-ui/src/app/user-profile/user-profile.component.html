@@ -18,12 +18,10 @@
           mat-raised-button color="accent" (click)="unsubscribeToUser()">
     UNSUBSCRIBED
   </button>
-
 </div>
 
-<div fxLayout="row wrap" fxLayoutGap="12px grid">
-  <div fxFlex="25%" *ngFor="let userOwnedVideo of userOwned">
-    <app-video-card [video]="userOwnedVideo"></app-video-card>
-    <button mat-raised-button color="warn" *ngIf="userId === userService.getUserId()" (click)="deleteVideo(userOwnedVideo.id)">Delete</button>
+<div class="profile-comp">
+  <div class="video-card" *ngFor="let userOwnedVideo of userOwned">
+    <app-video-card [video]="userOwnedVideo" [showDeleteButton]="true" (delete)="deleteVideo($event)"></app-video-card>
   </div>
 </div>
