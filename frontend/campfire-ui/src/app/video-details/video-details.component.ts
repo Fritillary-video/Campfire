@@ -73,22 +73,25 @@ export class VideoDetailsComponent implements OnInit {
             this.checkSubscriptionStatus();
           }
         });
+        
+        let searchField = "";
+        this.tags.forEach((tag)=> searchField += tag + " ")
+        searchField += this.videoTitle;
+
+        this.videoService.search(searchField).subscribe(data => {
+          data.forEach((item) => {
+            if(item.id !== this.videoId){
+              this.suggestedVideos.add(item)}
+          });
+        })
+        // this.videoService.getAllVideos().subscribe(data => {
+        //   data.forEach((item) =>{if (!this.suggestedVideos.has(item) && item.id !== this.videoId){
+        //     this.suggestedVideos.add(item);
+        //   }})
+        // });
       });
 
-      this.videoService.search(this.videoTitle).subscribe(data => {
-        console.log(data);
-        data.forEach((item) => {
-          if(item.id !== this.videoId){
-            this.suggestedVideos.add(item)}
-        });
-      })
-    
-
-      // this.videoService.getAllVideos().subscribe(data => {
-      //   data.forEach((item) =>{if (!this.suggestedVideos.has(item) && item.id !== this.videoId){
-      //     this.suggestedVideos.add(item);
-      //   }})
-      // });
+      
   }
 
   searchBasedOnTag(tag : string) : void {
