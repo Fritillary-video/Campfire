@@ -61,5 +61,4 @@ export class VideoService {
   deleteVideo(videoId: string): Observable<null> {
     return this.httpClient.delete<null>(this.apiUrl + "/api/videos/" + videoId);
   }
-
 }

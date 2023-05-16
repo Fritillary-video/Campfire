@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { OidcSecurityService } from "angular-auth-oidc-client"
 import { Router } from "@angular/router";
 import { UserService } from '../user.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +11,18 @@ import { UserService } from '../user.service';
 })
 export class HeaderComponent {
 
+  @Input()
+  searchFromHeader : string = "";
   isAuthenticated: boolean = false;
+  inputValue!: FormControl;
+
   constructor(private oidcSecurityService: OidcSecurityService, private router: Router, private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.oidcSecurityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
       this.isAuthenticated = isAuthenticated;
+      this.inputValue = new FormControl('');
     })
   }
 
@@ -39,4 +45,20 @@ export class HeaderComponent {
     this.router.navigateByUrl('/my-profile');
   }
 
+  headerSearch(){
+   this.router.navigateByUrl('/search/'+this.inputValue.value);
+   this.inputValue.reset();
+  }
+
+  liked() {
+    this.router.navigateByUrl('/liked-videos');
+  }
+
+  history() {
+    this.router.navigateByUrl('/history');
+  }
+
+  subscriptions() {
+    this.router.navigateByUrl('/subscriptions');
+  }
 }

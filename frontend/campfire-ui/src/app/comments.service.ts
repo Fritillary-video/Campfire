@@ -12,12 +12,15 @@ export class CommentsService {
 
   constructor(private httpClient : HttpClient) { }
 
-  postComment(commentDTO : any, videoId : string) : Observable<any>{
-    return this.httpClient.post<any>(this.apiUrl+"/api/videos/"+videoId+"/comment", commentDTO);
+  postComment(commentDTO : any, videoId : string) : Observable<null>{
+    return this.httpClient.post<null>(this.apiUrl+"/api/videos/"+videoId+"/comment", commentDTO);
   }
 
   getAllComments(videoId: string) : Observable<Array<CommentDto>>{
     return this.httpClient.get<CommentDto[]>(this.apiUrl+"/api/videos/"+videoId+"/comment");
   }
 
+  deleteComment(videoId: string, commentId: string): Observable<any> {
+    return this.httpClient.delete<null>(this.apiUrl + `/api/videos/${videoId}/comments/${commentId}`);
+  }
 }

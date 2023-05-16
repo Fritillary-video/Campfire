@@ -4,3 +4,13 @@
 .example-text:hover {
   cursor: pointer;
 }
+.example-form {
+  min-width: 150px;
+  max-width: 700px;
+  width: 100%;
+  padding-top: 22px;
+}
+
+.example-full-width {
+  width: 100%;
+}

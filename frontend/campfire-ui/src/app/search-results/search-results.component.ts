@@ -15,7 +15,6 @@ export class SearchResultsComponent implements OnInit{
   searchResults: Array<VideoDto> = [];
 
   constructor(private videoService: VideoService, private activatedRoute : ActivatedRoute) {
-    console.log("in the search component")
     this.searchTerm = this.activatedRoute.snapshot.params['searchTerm'];
    }
 

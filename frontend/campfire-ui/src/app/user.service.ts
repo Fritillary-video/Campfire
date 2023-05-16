@@ -73,7 +73,7 @@ export class UserService {
    }
 
    getUserId(): string {
-     //console.log("in get userId in user service, userId: "+this.userId);
+     console.log("in get userId in user service, userId: "+this.userId);
      return this.userId;
    }
 

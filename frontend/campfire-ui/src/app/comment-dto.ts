@@ -1,4 +1,9 @@
 export interface CommentDto{
-    commentText : string,
-    authorId : string
+    commentId : string,
+    text : string,
+    authorId : string,
+    authorEmail : string,
+    likeCount : number,
+    dislikeCount : number,
+    datePosted : string
 }
