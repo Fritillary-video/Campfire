@@ -1,6 +1,13 @@
 .example-card {
   width: 350px;
   height: 400px;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+.example-card:hover {
+  transform: translate(1px, -5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
