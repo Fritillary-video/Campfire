@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { VideoDto } from '../video-dto';
 import { UserInfoDTO } from '../user-info-dto';
+import { ActivatedRoute } from '@angular/router'; // Add this import
 
 @Component({
   selector: 'app-user-profile',
@@ -22,22 +23,26 @@ export class UserProfileComponent implements OnInit {
     subscribers: new Set<string>()
   };
 
-  // Add a new property to keep track of the number of subscribers
   subscribers: number = 0;
 
-  constructor(private userService: UserService) { }
+  // Inject ActivatedRoute in the constructor
+  constructor(private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const userId = this.userService.getUserId();
-    this.userService.getUserProfile(userId).subscribe(response => {
-      this.userProfile = response;
+    let userId = this.route.snapshot.paramMap.get('userId');
+    if (!userId) {
+      userId = this.userService.getUserId();
+    }
 
-      // Update the number of subscribers after getting the user profile
-      this.subscribers = Array.from(this.userProfile.subscribers).length;
-    });
+    if (userId) {
+      this.userService.getUserProfile(userId).subscribe(response => {
+        this.userProfile = response;
+        this.subscribers = Array.from(this.userProfile.subscribers).length;
+      });
 
-    this.userService.getUserOwned(userId).subscribe(response => {
-      this.userOwned = response;
-    });
+      this.userService.getUserOwned(userId).subscribe(response => {
+        this.userOwned = response;
+      });
+    }
   }
 }

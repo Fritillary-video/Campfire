@@ -36,6 +36,7 @@ export class HeaderComponent {
   }
 
   profile() {
-    this.router.navigateByUrl('/user-profile/' + this.userService.getUserId());
+    this.router.navigateByUrl('/my-profile');
   }
+
 }

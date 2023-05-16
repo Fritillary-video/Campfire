@@ -34,6 +34,9 @@ const routes: Routes = [
         path: 'user-profile/:userId', component: UserProfileComponent
       },
       {
+        path: 'my-profile', component: UserProfileComponent
+      },
+      {
         path: 'search/:searchTerm', component: SearchResultsComponent,
       },
     ]

@@ -24,3 +24,19 @@
   background-color: #f0f0f0; /* This will change the card's background color when hovered */
 }
 
+/*... your existing styles ...*/
+
+a.user-link {
+  color: inherit; /* this will make the link have the same color as the surrounding text */
+  text-decoration: none; /* this will remove the underline */
+}
+
+a.user-link:hover {
+  color: #1976d2; /* this will change the color of the text to a light blue when the mouse is over it */
+  text-decoration: bold; /* this will underline the text when the mouse is over it */
+}
+
+a.user-link:active {
+  color: #0d47a1; /* this will change the color of the text to a darker blue when the link is being clicked */
+}
+
