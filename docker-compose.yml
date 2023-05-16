@@ -1,0 +1,15 @@
+version: '1'
+services:
+  campfire-web-frontend:
+    image: campfire-web-frontend:latest
+    environment:
+      PORT: 4200
+      PROXY_API: http://playground-web-backend:8080/
+    ports:
+      - 4200:4200
+  campfire-web-backend:
+    image: campfire-web-backend:latest
+    environment:
+      MONGO_PASSWORD=zipcode00edocpiz
+    ports:
+      - 8080:8080

@@ -49,4 +49,16 @@ export class HeaderComponent {
    this.router.navigateByUrl('/search/'+this.inputValue.value);
    this.inputValue.reset();
   }
+
+  liked() {
+    this.router.navigateByUrl('/liked-videos');
+  }
+
+  history() {
+    this.router.navigateByUrl('/history');
+  }
+
+  subscriptions() {
+    this.router.navigateByUrl('/subscriptions');
+  }
 }
