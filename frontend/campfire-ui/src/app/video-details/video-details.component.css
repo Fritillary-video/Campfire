@@ -19,9 +19,15 @@ mat-card[ng-reflect-router-link] {
   margin-top: 10px;
 }
 
-.subscribe-button {
-  height: 40px;
-  justify-content: right;
+.uploader-and-subscribe {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscribe-buttons {
+  margin-left: 10px;
+  margin-right: 100px;
 }
 
 .subscribe-button-clicked {
@@ -66,11 +72,12 @@ mat-card[ng-reflect-router-link] {
   border: 1px solid #ccc;
   text-decoration: none;
   transition: all 0.3s ease;
+  border-radius: 20px;
 }
 
 .profile-link:hover {
   color: #fff;
-  background-color: #337ab7;
+  background-color: #808080;
   border-color: #2e6da4;
   transform: scale(1.05);
 }
