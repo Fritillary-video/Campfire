@@ -49,5 +49,9 @@
   </div>
   <div fxFlex="5%"></div>
   <div fxFlex="30%" class="suggestion-bar">
+    <h3>Similar videos you might like:</h3>
+    <div  class="suggested-video-card" *ngFor="let suggestedVideo of suggestedVideos">
+      <app-video-card (click)= "videoRedirect(suggestedVideo.id)"[video]="suggestedVideo"></app-video-card>
+  </div>
   </div>
 </div>

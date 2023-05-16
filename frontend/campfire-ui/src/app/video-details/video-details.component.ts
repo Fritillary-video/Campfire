@@ -29,6 +29,7 @@ export class VideoDetailsComponent implements OnInit {
   subscribers: number = 0;
   searchedResults! : Array<VideoDto>;
   currentUserId!: string;
+  suggestedVideos: Set<VideoDto> = new Set();
 
 
 
@@ -73,12 +74,25 @@ export class VideoDetailsComponent implements OnInit {
           }
         });
       });
+
+      this.videoService.search(this.videoTitle).subscribe(data => {
+        console.log(data);
+        data.forEach((item) => {
+          if(item.id !== this.videoId){
+            this.suggestedVideos.add(item)}
+        });
+      })
+    
+
+      // this.videoService.getAllVideos().subscribe(data => {
+      //   data.forEach((item) =>{if (!this.suggestedVideos.has(item) && item.id !== this.videoId){
+      //     this.suggestedVideos.add(item);
+      //   }})
+      // });
   }
 
   searchBasedOnTag(tag : string) : void {
-    console.log("in vid details")
    this.router.navigateByUrl('/search/'+tag);
-   console.log("after router");
   }
 
   checkSubscriptionStatus(): void {
@@ -114,5 +128,10 @@ export class VideoDetailsComponent implements OnInit {
     this.userService.unsubscribeToUser(this.currentUserId, uploaderId).subscribe(data => {
       this.checkSubscriptionStatus();
     });
+  }
+
+  videoRedirect(id : string) {
+    this.router.navigateByUrl(/video-details/+id);
+    location.reload();
   }
 }
