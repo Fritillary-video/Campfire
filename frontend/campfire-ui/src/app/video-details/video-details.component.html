@@ -6,11 +6,18 @@
       <div fxLayout="row">
         <div fxLayout="column">
           <mat-card-title>{{videoTitle}} </mat-card-title>
-          <mat-card-subtitle class="subtitles">
-            Uploaded by:
-            <a class="profile-link" [routerLink]="['/user-profile', uploaderId]">{{accountName}}</a>
-          </mat-card-subtitle>
-
+          <div class="uploader-and-subscribe">
+            <mat-card-subtitle class="subtitles">
+              Uploaded by:
+              <a class="profile-link" [routerLink]="['/user-profile', uploaderId]">{{accountName}}</a>
+            </mat-card-subtitle>
+            <div class="subscribe-buttons">
+              <button *ngIf="showSubscribeButton && isAuthenticated && currentUserId != uploaderId" class="subscribe-button" mat-raised-button color="warn"
+                      (click)="subscribeToUser()">SUBSCRIBE</button>
+              <button *ngIf="showUnsubscribeButton && isAuthenticated && currentUserId != uploaderId" class="subscribe-button-clicked" mat-raised-button
+                      color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED</button>
+            </div>
+          </div>
           <mat-card-subtitle class="subtitles">{{subscribers}} {{subscribers == 1 ? 'Subscriber' : 'Subscribers'}}</mat-card-subtitle>
           <div fxFlex="50%">
             <span class="view-count">{{viewCount}} views</span>
@@ -18,10 +25,6 @@
             <span class="video-upload-date">{{datePosted}}</span>
           </div>
         </div>
-        <button *ngIf="showSubscribeButton && isAuthenticated && currentUserId != uploaderId" class="subscribe-button" mat-raised-button color="warn"
-                (click)="subscribeToUser()">SUBSCRIBE</button>
-        <button *ngIf="showUnsubscribeButton && isAuthenticated && currentUserId != uploaderId" class="subscribe-button-clicked" mat-raised-button
-                color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED</button>
         <div fxFlex="50%" fxLayoutAlign="end">
             <span class="like-dislike-section">
               <button mat-icon-button class="thumbs-up" (click)="likeVideo()">
