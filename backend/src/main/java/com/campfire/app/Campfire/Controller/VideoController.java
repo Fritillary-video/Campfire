@@ -87,14 +87,15 @@ public class VideoController {
     }
 
     @DeleteMapping("/{videoId}/comments/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable String videoId, @PathVariable String commentId) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteComment(@PathVariable String videoId, @PathVariable String commentId) {
         try {
             videoService.deleteComment(videoId, commentId);
-            return ResponseEntity.ok("Comment deleted successfully.");
+            //return ResponseEntity.ok("Comment deleted successfully.");
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
