@@ -212,4 +212,32 @@ public class UserService {
             }
         return videoDtos;
     }
+
+    public void removeVideoFromUserLists(String videoId) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            boolean modified = removeVideoFromUserLists(user, videoId);
+            if (modified) {
+                userRepository.save(user);
+            }
+        }
+    }
+
+    private boolean removeVideoFromUserLists(User user, String videoId) {
+        boolean modified = false;
+        if (user.getVideoHistory().contains(videoId)) {
+            user.getVideoHistory().remove(videoId);
+            modified = true;
+        }
+        if (user.getLikedVideos().contains(videoId)) {
+            user.getLikedVideos().remove(videoId);
+            modified = true;
+        }
+        if (user.getDislikedVideos().contains(videoId)) {
+            user.getDislikedVideos().remove(videoId);
+            modified = true;
+        }
+        return modified;
+    }
+
 }

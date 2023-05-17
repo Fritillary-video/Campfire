@@ -23,12 +23,13 @@
         <div fxFlex="50%">
             <mat-card-header>
                 <div matCardAvatar class="example-header-image"></div>
-                <a matCardTitle class="comment-author" routerLink="">{{comment.authorEmail}}</a>
+                <!-- .split('@').shift()! -->
+                <a matCardTitle class="comment-author" [routerLink]="['/user-profile', comment.authorId]">{{comment.authorEmail}}</a>
                 <p matCardSubtitle>{{comment.datePosted}}</p>
                 <p class="black-text" matCardSubtitle>{{comment.text}}</p>
             </mat-card-header>
         </div>
-        <div fxFlex="50%" class="delete-comment" fxFlexAlign="end">
+        <div fxFlex="50%" class="delete-comment" fxFlexAlign="end" *ngIf="checkDelete(comment)">
             <button mat-icon-button (click)="deleteComment(comment.commentId)">
                 <mat-icon>delete</mat-icon>
             </button>

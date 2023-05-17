@@ -59,7 +59,6 @@ export class CommentsComponent {
 
   getComments(){
     this.commentsService.getAllComments(this.videoId).subscribe(data => {
-      console.log(data)
       this.commentsDto = data;
     });
   }
@@ -69,5 +68,9 @@ export class CommentsComponent {
       this.matSnackBar.open("Comment Deleted Successfully", "OK");
       this.getComments(); // get comments and display
     });
+  }
+
+  checkDelete(comment : CommentDto) : boolean{
+    return comment.authorId ===  this.userService.getUserId();
   }
 }

@@ -256,6 +256,6 @@ public class VideoService {
 
     public void deleteVideo(String videoId) {
         videoRepository.deleteById(videoId);
+        userService.removeVideoFromUserLists(videoId);
     }
-
 }

@@ -33,11 +33,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-            <dependency>
-                <groupId>io.awspring.cloud</groupId>
-                <artifactId>spring-cloud-aws-context</artifactId>
-                <version>2.3.0</version>
-            </dependency>
+        <dependency>
+            <groupId>io.awspring.cloud</groupId>
+            <artifactId>spring-cloud-aws-context</artifactId>
+            <version>2.3.0</version>
+        </dependency>
         <dependency>
             <groupId>io.awspring.cloud</groupId>
             <artifactId>spring-cloud-aws-autoconfigure</artifactId>
@@ -58,7 +58,7 @@
     <build>
         <plugins>
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>

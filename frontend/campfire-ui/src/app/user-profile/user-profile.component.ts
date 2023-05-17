@@ -28,7 +28,7 @@ export class UserProfileComponent implements OnInit {
   };
   userId?: string; // Only this property should exist, remove any other 'userId' declaration
   subscribers: number = 0;
-isAuthenticated: boolean = false;
+  isAuthenticated: boolean = false;
 
   constructor(public userService: UserService, private route: ActivatedRoute,
               private videoService: VideoService, private router: Router,

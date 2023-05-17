@@ -1,0 +1,14 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - 8080:8080
+    environment:
+      - MONGO_PASSWORD
+      - AWS_ACCESS_KEY
+      - AWS_SECRET_KEY
+  frontend:
+    build: ./frontend
+    ports:
+      - 4200:80

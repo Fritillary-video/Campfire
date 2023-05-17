@@ -1,5 +1,15 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
+    <button mat-icon-button class="mobile-menu-button"  mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+    [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+      <mat-menu #menu="matMenu" class="buttons-menu">
+        <button mat-menu-item (click)="home()">Home</button>
+        <button mat-menu-item (click)="subscriptions()">Subscriptions</button>
+        <button mat-menu-item (click)="history()">History</button>
+        <button mat-menu-item (click)="liked()">Liked</button>
+      </mat-menu>
+    </button>
     <span (click)="home()" matTooltip="Home" class="example-text">CampFire</span>
     <div>
       <style>
