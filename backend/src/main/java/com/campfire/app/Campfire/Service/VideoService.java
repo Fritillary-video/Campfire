@@ -230,10 +230,8 @@ public class VideoService {
                 String capitalWord = "";
                 if(Character.toLowerCase(word.charAt(word.length()-1)) =='s'){
                     word = word.substring(0, word.length()-1);
-                    System.out.println(word);
                 }
                 capitalWord = Character.toUpperCase(word.charAt(0)) + word.substring(1, word.length());
-                System.out.println(capitalWord);
                 if (video.getTitle().toLowerCase().contains(word.toLowerCase())) {
                     return true;
                 } else if (video.getTags().contains(word.toLowerCase()) 
