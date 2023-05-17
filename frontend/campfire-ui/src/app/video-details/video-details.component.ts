@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VideoService } from '../video.service';
 import { UserService } from '../user.service';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { VideoDto } from '../video-dto';
 
 @Component({
   selector: 'app-video-details',
@@ -26,11 +27,15 @@ export class VideoDetailsComponent implements OnInit {
   uploaderId!: string; // new field
   accountName!: string;
   subscribers: number = 0;
+  searchedResults! : Array<VideoDto>;
+  currentUserId!: string;
+  suggestedVideos: Set<VideoDto> = new Set();
 
 
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService,
-    private userService: UserService, private oidcSecurityService: OidcSecurityService) {
+    private userService: UserService, private oidcSecurityService: OidcSecurityService,
+    private router : Router) {
     this.userService.idCheck();
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
   }
@@ -38,11 +43,15 @@ export class VideoDetailsComponent implements OnInit {
   //put this method which runs at runtime to be before we load in video info and user info to make
   //subscribe button to retain its pressed state
   ngOnInit(): void {
-    this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
-      this.isAuthenticated = isAuthenticated;
+      this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
+          this.isAuthenticated = isAuthenticated;
+          if (isAuthenticated) {
+            this.currentUserId = this.userService.getUserId();
+          }
+      });
 
       this.videoService.getVideo(this.videoId).subscribe(data => {
-      console.log(data);
+        console.log(data);
         this.videoUrl = data.videoUrl;
         this.videoAvailable = true;
         this.videoTitle = data.title;
@@ -55,8 +64,8 @@ export class VideoDetailsComponent implements OnInit {
         this.uploaderId = data.userId;
 
         this.userService.getUserProfile(this.uploaderId).subscribe(profileData => {
-        console.log(profileData);
-        console.log("in video details, user Id: "+this.uploaderId);
+          console.log(profileData);
+          console.log("in video details, user Id: "+this.uploaderId);
           this.accountName = profileData.email.split('@').shift()!;
           this.subscribers = Array.from(profileData.subscribers).length;
 
@@ -64,8 +73,26 @@ export class VideoDetailsComponent implements OnInit {
             this.checkSubscriptionStatus();
           }
         });
+        
+        let searchField = "";
+        this.tags.forEach((tag)=> searchField += tag + " ")
+        searchField += this.videoTitle;
+
+        this.videoService.search(searchField).subscribe(data => {
+          data.forEach((item) => {
+            if(item.id !== this.videoId){
+              this.suggestedVideos.add(item)}
+          });
+        })
+        // this.videoService.getAllVideos().subscribe(data => {
+        //   data.forEach((item) =>{if (!this.suggestedVideos.has(item) && item.id !== this.videoId){
+        //     this.suggestedVideos.add(item);
+        //   }})
+        // });
       });
-    });
+  }
+  searchBasedOnTag(tag : string) : void {
+   this.router.navigateByUrl('/search/'+tag);
   }
 
   checkSubscriptionStatus(): void {
@@ -90,18 +117,21 @@ export class VideoDetailsComponent implements OnInit {
   }
 
   subscribeToUser() {
-    const currentUserId = this.userService.getUserId();
     const uploaderId = this.uploaderId;
-    this.userService.subscribeToUser(currentUserId, uploaderId).subscribe(data => {
+    this.userService.subscribeToUser(this.currentUserId, uploaderId).subscribe(data => {
       this.checkSubscriptionStatus();
     });
   }
 
   unsubscribeToUser() {
-    const currentUserId = this.userService.getUserId();
     const uploaderId = this.uploaderId;
-    this.userService.unsubscribeToUser(currentUserId, uploaderId).subscribe(data => {
+    this.userService.unsubscribeToUser(this.currentUserId, uploaderId).subscribe(data => {
       this.checkSubscriptionStatus();
     });
+  }
+
+  videoRedirect(id : string) {
+    this.router.navigateByUrl(/video-details/+id);
+    location.reload();
   }
 }

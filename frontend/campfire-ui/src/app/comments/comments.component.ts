@@ -23,7 +23,7 @@ export class CommentsComponent {
     private matSnackBar : MatSnackBar, private oidcSecurityService: OidcSecurityService){
 
     this.commentsForm = new FormGroup({
-      comment: new FormControl('comment'),
+      comment: new FormControl(''),
     });
 
   }
@@ -39,8 +39,13 @@ export class CommentsComponent {
     const comment = this.commentsForm.get('comment')?.value;
     
     const commentDTO = {
-      "commentText" : comment,
+      "commentId" : "",
+      "text" : comment,
       "authorId" : this.userService.getUserId(),
+      "authorName" : "",
+      "likeCount" : 0,
+      "dislikeCount" : 0,
+      "datePosted" : new Date().toLocaleDateString(),
     }
 
     this.commentsService.postComment(commentDTO, this.videoId).subscribe(()=>{
@@ -58,4 +63,14 @@ export class CommentsComponent {
     });
   }
 
+  deleteComment(commentId: string) {
+    this.commentsService.deleteComment(this.videoId, commentId).subscribe(() => {
+      this.matSnackBar.open("Comment Deleted Successfully", "OK");
+      this.getComments(); // get comments and display
+    });
+  }
+
+  checkDelete(comment : CommentDto) : boolean{
+    return comment.authorId ===  this.userService.getUserId();
+  }
 }

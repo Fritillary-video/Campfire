@@ -10,6 +10,7 @@ import { LikedVideosComponent } from './liked-videos/liked-videos.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { CallbackComponent } from './callback/callback.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 
 
@@ -32,6 +33,12 @@ const routes: Routes = [
       {
         path: 'user-profile/:userId', component: UserProfileComponent
       },
+      {
+        path: 'my-profile', component: UserProfileComponent
+      },
+      {
+        path: 'search/:searchTerm', component: SearchResultsComponent,
+      },
     ]
   },
   {
@@ -46,6 +53,9 @@ const routes: Routes = [
   {
     path: 'callback', component: CallbackComponent,
   },
+  // {
+  //   path: 'search/:searchTerm', component: SearchResultsComponent,
+  // },
 ];
 
 @NgModule({

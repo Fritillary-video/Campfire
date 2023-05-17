@@ -1,6 +1,7 @@
 package com.campfire.app.Campfire.Service;
 
 import com.campfire.app.Campfire.Model.Comment;
+import com.campfire.app.Campfire.Model.User;
 import com.campfire.app.Campfire.Model.Video;
 import com.campfire.app.Campfire.Repository.VideoRepository;
 import com.campfire.app.Campfire.dto.CommentDTO;
@@ -16,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -161,11 +164,25 @@ public class VideoService {
 
     public void addComment(String videoId, CommentDTO commentDto) {
         Video video = getVideoById(videoId);
+        User user = userService.getCurrentUser();
         Comment comment = new Comment();
-        comment.setText(commentDto.getCommentText());
+        UUID uuid = UUID.randomUUID();
+
+        comment.setCommentId(uuid.toString());
+        comment.setAuthorEmail(user.getEmailAddress());
+        comment.setText(commentDto.getText());
         comment.setAuthorId(commentDto.getAuthorId());
+        comment.setDatePosted(commentDto.getDatePosted());
+        comment.setLikeCount(0);
+        comment.setDislikeCount(0);
+        
+
+        // String commentId = videoRepository.save(video).getId();
+        // comment.setCommentId(commentId);
         video.addComment(comment);
         videoRepository.save(video);
+
+        //return comment.getCommentId();
     }
 
     public List<CommentDTO> getAllComments(String videoId) {
@@ -176,19 +193,43 @@ public class VideoService {
 
     private CommentDTO mapToCommentDto(Comment comment) {
         CommentDTO commentDto = new CommentDTO();
-        commentDto.setCommentText(comment.getText());
+
+        commentDto.setCommentId(comment.getCommentId());
+        commentDto.setText(comment.getText());
+        commentDto.setAuthorEmail(comment.getAuthorEmail());
         commentDto.setAuthorId(comment.getAuthorId());
+        commentDto.setLikeCount(comment.getLikeCount());
+        commentDto.setDislikeCount(comment.getDislikeCount());
+        commentDto.setDatePosted(comment.getDatePosted());
+
         return commentDto;
     }
 
-    public Set<VideoDto> searchForVideos(String search){
+    public void deleteComment(String videoId, String commentId) {
+        Video video = getVideoById(videoId);
+        List<Comment> commentList = video.getCommentList();
+
+        // Find the comment with the given commentId
+        Optional<Comment> commentOptional = commentList.stream()
+                .filter(comment -> comment.getCommentId().equals(commentId))
+                .findFirst();
+
+        // If the comment exists, remove it from the list and save the updated video
+        if (commentOptional.isPresent()) {
+            Comment commentToDelete = commentOptional.get();
+            commentList.remove(commentToDelete);
+            videoRepository.save(video);
+        }
+    }
+
+    public Set<VideoDto> searchForVideos(String search) {
         search = search.trim();
         String[] words = search.split(" ");
         return getAllVideos().stream().filter((video) -> {
-            for(String word : words){
-                if(video.getTitle().toLowerCase().contains(word.toLowerCase())){
+            for (String word : words) {
+                if (video.getTitle().toLowerCase().contains(word.toLowerCase())) {
                     return true;
-                }else if(video.getTags().contains(word.toLowerCase()) || video.getTags().contains(word)){
+                } else if (video.getTags().contains(word.toLowerCase()) || video.getTags().contains(word)) {
                     return true;
                 }
             }
@@ -200,5 +241,8 @@ public class VideoService {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).collect(Collectors.toList());
     }
 
+    public void deleteVideo(String videoId) {
+        videoRepository.deleteById(videoId);
+    }
 
 }

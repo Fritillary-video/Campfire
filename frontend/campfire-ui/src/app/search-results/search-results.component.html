@@ -2,8 +2,9 @@
   <h3>Search Results</h3>
 </div>
 
-<div fxLayout="row wrap" fxLayoutGap="12px grid">
-  <div fxFlex="25%" *ngFor="let videoResult of searchResults">
-    <app-video-card []="videoResult"></app-video-card>
+<!-- <div fxLayout="row wrap" fxLayoutGap="12px grid"> -->
+  <div class="search-comp">
+  <div *ngFor="let videoResult of searchResults">
+    <app-video-card [video]="videoResult"></app-video-card>
   </div>
 </div>

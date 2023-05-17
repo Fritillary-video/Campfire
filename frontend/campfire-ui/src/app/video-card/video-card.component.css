@@ -1,6 +1,13 @@
 .example-card {
   width: 350px;
   height: 400px;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+.example-card:hover {
+  transform: translate(1px, -5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
@@ -22,5 +29,21 @@
 .example-card:hover {
   cursor: pointer;
   background-color: #f0f0f0; /* This will change the card's background color when hovered */
+}
+
+/*... your existing styles ...*/
+
+a.user-link {
+  color: inherit; /* this will make the link have the same color as the surrounding text */
+  text-decoration: none; /* this will remove the underline */
+}
+
+a.user-link:hover {
+  color: #1976d2; /* this will change the color of the text to a light blue when the mouse is over it */
+  text-decoration: bold; /* this will underline the text when the mouse is over it */
+}
+
+a.user-link:active {
+  color: #0d47a1; /* this will change the color of the text to a darker blue when the link is being clicked */
 }
 

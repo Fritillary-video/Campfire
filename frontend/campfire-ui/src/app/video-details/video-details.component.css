@@ -2,11 +2,6 @@
   padding-top: 15px;
 }
 
-.video-detail{
-  margin-top: 40px;
-  margin-left: 100px;
-}
-
 .subtitles{
   justify-content: space-between;
 }
@@ -19,9 +14,15 @@ mat-card[ng-reflect-router-link] {
   margin-top: 10px;
 }
 
-.subscribe-button {
-  height: 40px;
-  justify-content: right;
+.uploader-and-subscribe {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscribe-buttons {
+  margin-left: 10px;
+  margin-right: 100px;
 }
 
 .subscribe-button-clicked {
@@ -53,7 +54,44 @@ mat-card[ng-reflect-router-link] {
   padding-right: 10px;
 }
 
-.video-player-app {
-  width: 900px;
-  height: 500px;
+@media (max-width: 750px) {
+  .video-player-app {
+    width: 100%;
+  }
+  .video-detail{
+    margin-top: 40px;
+    margin-left: 1px;
+  }
+
+}
+
+
+@media (min-width: 751px) {
+  .video-player-app {
+    width: 900px;
+    height: 500px;
+  }
+  .video-detail{
+    margin-top: 40px;
+    margin-left: 100px;
+  }
+
+}
+
+.profile-link {
+  display: inline-block;
+  padding: 6px 12px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+}
+
+.profile-link:hover {
+  color: #fff;
+  background-color: #808080;
+  border-color: #2e6da4;
+  transform: scale(1.05);
 }

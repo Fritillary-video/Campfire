@@ -1,3 +1,10 @@
 .example-header-image {
   background-size: cover;
 }
+
+.profile-comp {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+}

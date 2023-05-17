@@ -51,7 +51,14 @@ export class VideoService {
   }
 
   dislikeVideo(videoId: string) : Observable<VideoDto>{
-    return this.httpClient.post<VideoDto>(this.apiUrl + "/api/videos/" + videoId+"/dislike",null);
+    return this.httpClient.post<VideoDto>(this.apiUrl + "/api/videos/" + videoId +"/dislike",null);
   }
 
+  search(searchTerm : string) : Observable<Array<VideoDto>>{
+    return this.httpClient.get<Array<VideoDto>>(this.apiUrl+"/api/videos/searchResults/"+searchTerm);
+  }
+
+  deleteVideo(videoId: string): Observable<null> {
+    return this.httpClient.delete<null>(this.apiUrl + "/api/videos/" + videoId);
+  }
 }

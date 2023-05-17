@@ -4,9 +4,20 @@
       <app-video-player *ngIf="videoAvailable" [videoUrl]="videoUrl" class="video-player-app"></app-video-player>
       <mat-divider></mat-divider>
       <div fxLayout="row">
-        <div fxLayout="column"> <mat-card-title>Title: {{videoTitle}} </mat-card-title>
-          <mat-card-subtitle class="subtitles">Uploaded by: {{accountName}}</mat-card-subtitle>
-
+        <div fxLayout="column">
+          <mat-card-title>{{videoTitle}} </mat-card-title>
+          <div class="uploader-and-subscribe">
+            <mat-card-subtitle class="subtitles">
+              Uploaded by:
+              <a class="profile-link" [routerLink]="['/user-profile', uploaderId]">{{accountName}}</a>
+            </mat-card-subtitle>
+            <div class="subscribe-buttons">
+              <button *ngIf="showSubscribeButton && isAuthenticated && currentUserId != uploaderId" class="subscribe-button" mat-raised-button color="warn"
+                      (click)="subscribeToUser()">SUBSCRIBE</button>
+              <button *ngIf="showUnsubscribeButton && isAuthenticated && currentUserId != uploaderId" class="subscribe-button-clicked" mat-raised-button
+                      color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED</button>
+            </div>
+          </div>
           <mat-card-subtitle class="subtitles">{{subscribers}} {{subscribers == 1 ? 'Subscriber' : 'Subscribers'}}</mat-card-subtitle>
           <div fxFlex="50%">
             <span class="view-count">{{viewCount}} views</span>
@@ -14,10 +25,6 @@
             <span class="video-upload-date">{{datePosted}}</span>
           </div>
         </div>
-        <button *ngIf="showSubscribeButton && isAuthenticated" class="subscribe-button" mat-raised-button color="warn"
-          (click)="subscribeToUser()">SUBSCRIBE</button>
-        <button *ngIf="showUnsubscribeButton && isAuthenticated" class="subscribe-button-clicked" mat-raised-button
-          color="accent" (click)="unsubscribeToUser()">UNSUBSCRIBED</button>
         <div fxFlex="50%" fxLayoutAlign="end">
             <span class="like-dislike-section">
               <button mat-icon-button class="thumbs-up" (click)="likeVideo()">
@@ -36,7 +43,7 @@
       <mat-divider></mat-divider>
       <div fxLayout="row">
         <mat-chip-grid *ngFor="let tag of tags">
-          <mat-chip>{{tag}}</mat-chip>
+          <mat-chip (click)="searchBasedOnTag(tag)" routerLink="/search/">{{tag}}</mat-chip>
         </mat-chip-grid>
       </div>
       <mat-divider></mat-divider>
@@ -45,5 +52,14 @@
   </div>
   <div fxFlex="5%"></div>
   <div fxFlex="30%" class="suggestion-bar">
+    <h3><b>Similar videos you might like:</b></h3>
+    <div  class="suggested-video-card" *ngFor="let suggestedVideo of suggestedVideos">
+      <app-suggested-video-card (click)= "videoRedirect(suggestedVideo.id)"[video]="suggestedVideo"></app-suggested-video-card>
+  </div>
+  <style>
+    div{
+      padding-bottom: 25px;
+    }
+  </style>
   </div>
 </div>

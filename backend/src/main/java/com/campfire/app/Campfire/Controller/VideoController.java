@@ -6,10 +6,12 @@ import com.campfire.app.Campfire.dto.UploadVideoResponse;
 import com.campfire.app.Campfire.dto.VideoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RestController
@@ -17,6 +19,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class VideoController {
     private final VideoService videoService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UploadVideoResponse uploadVideo(@RequestParam("file") MultipartFile file) {
@@ -31,52 +34,69 @@ public class VideoController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public VideoDto editVideoMetadata(@RequestBody VideoDto videoDto){
+    public VideoDto editVideoMetadata(@RequestBody VideoDto videoDto) {
         return videoService.editVideo(videoDto);
     }
 
-
     @GetMapping("/{videoId}")
     @ResponseStatus(HttpStatus.OK)
-    public VideoDto getVideoDetails(@PathVariable String videoId){
+    public VideoDto getVideoDetails(@PathVariable String videoId) {
         return videoService.getVideoDetails(videoId);
     }
 
     @PostMapping("/{videoId}/like")
     @ResponseStatus(HttpStatus.OK)
-    public VideoDto likeVideo(@PathVariable String videoId){
+    public VideoDto likeVideo(@PathVariable String videoId) {
         return videoService.likeVideo(videoId);
     }
 
     @PostMapping("/{videoId}/dislike")
     @ResponseStatus(HttpStatus.OK)
-    public VideoDto dislikeVideo(@PathVariable String videoId){
+    public VideoDto dislikeVideo(@PathVariable String videoId) {
         return videoService.dislikeVideo(videoId);
     }
 
-
     @PostMapping("{videoId}/comment")
     @ResponseStatus(HttpStatus.OK)
-    public void addComment(@PathVariable String videoId, @RequestBody CommentDTO commentDto){
+    public void addComment(@PathVariable String videoId, @RequestBody CommentDTO commentDto) {
         videoService.addComment(videoId, commentDto);
     }
 
     @GetMapping("/{videoId}/comment")
     @ResponseStatus(HttpStatus.OK)
-    public List<CommentDTO> getAllComments(@PathVariable String videoId){
+    public List<CommentDTO> getAllComments(@PathVariable String videoId) {
         return videoService.getAllComments(videoId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<VideoDto> getAllVideos(){
+    public List<VideoDto> getAllVideos() {
         return videoService.getAllVideos();
     }
 
     @GetMapping("/searchResults/{search}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<VideoDto> searchResults(@PathVariable String search){
+    public Set<VideoDto> searchResults(@PathVariable String search) {
         return videoService.searchForVideos(search);
+    }
+
+    @DeleteMapping("/{videoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVideo(@PathVariable String videoId) {
+        videoService.deleteVideo(videoId);
+    }
+
+    @DeleteMapping("/{videoId}/comments/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteComment(@PathVariable String videoId, @PathVariable String commentId) {
+        try {
+            videoService.deleteComment(videoId, commentId);
+            //return ResponseEntity.ok("Comment deleted successfully.");
+        } catch (NoSuchElementException e) {
+            //return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

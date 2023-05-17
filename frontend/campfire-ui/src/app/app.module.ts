@@ -45,6 +45,9 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { SuggestedVideoCardComponent } from './suggested-video-card/suggested-video-card.component';
 
 
 @NgModule({
@@ -66,6 +69,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CommentsComponent,
     SearchResultsComponent,
     UserProfileComponent,
+    ConfirmDialogComponent,
+    SuggestedVideoCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,10 +101,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatMenuModule,
     MatTooltipModule,
     MatExpansionModule,
+    MatDialogModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmDialogComponent]
 })
 export class AppModule { }
