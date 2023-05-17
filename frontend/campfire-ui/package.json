@@ -12,7 +12,9 @@
     "node": "16.13.0",
     "npm": "9.6.4"
   },
-
+  "scripts": {
+    "postinstall": "npm install"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.0",
