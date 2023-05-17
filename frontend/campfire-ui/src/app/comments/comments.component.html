@@ -23,7 +23,7 @@
         <div fxFlex="50%">
             <mat-card-header>
                 <div matCardAvatar class="example-header-image"></div>
-                <a matCardTitle class="comment-author" routerLink="">{{comment.authorEmail}}</a>
+                <a matCardTitle class="comment-author" [routerLink]="['/user-profile', comment.authorId]">{{comment.authorEmail.split('@').shift()!}}</a>
                 <p matCardSubtitle>{{comment.datePosted}}</p>
                 <p class="black-text" matCardSubtitle>{{comment.text}}</p>
             </mat-card-header>
