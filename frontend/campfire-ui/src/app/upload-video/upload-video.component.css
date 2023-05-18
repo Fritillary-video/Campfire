@@ -1,0 +1,35 @@
+.drop{
+  width:50px;
+  font-size:20px
+}
+
+.header{
+  padding-top: 7px;
+  text-align: center;
+  font-size: 36px;
+}
+
+.drop-template{
+  font-size: 20px !important;
+}
+
+.search-button{
+  font-size: 20px;
+}
+
+.upload-button{
+  font-size: 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.upload-name-style{
+  font-size: 20px;
+}
+
+.upload-table{
+  padding-top: 7px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}

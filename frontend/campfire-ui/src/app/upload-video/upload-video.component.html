@@ -1,16 +1,17 @@
+<h1 class="header">Upload video</h1>
 <div class="center">
-  <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+  <ngx-file-drop class="drop" dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
                  (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+    <ng-template class="drop-template" ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
       Drop in your kindling or .
-      <button type="button" (click)="openFileSelector()">Browse Files</button>
+      <button class="search-button" type="button" (click)="openFileSelector()">Browse Files</button>
     </ng-template>
   </ngx-file-drop>
   <div class="upload-table">
     <table class="table">
       <thead>
       <tr>
-        <th>Name</th>
+        <th></th>
       </tr>
       </thead>
       <tbody class="upload-name-style">
@@ -20,5 +21,5 @@
       </tbody>
     </table>
   </div>
-  <button mat-button (click)="uploadVideo()"  *ngIf="fileUploaded">Upload Video</button>
+  <button class="upload-button" mat-button (click)="uploadVideo()"  *ngIf="fileUploaded">Upload Video</button>
 </div>
