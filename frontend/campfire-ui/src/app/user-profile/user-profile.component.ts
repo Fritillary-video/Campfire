@@ -35,6 +35,7 @@ export class UserProfileComponent implements OnInit {
               private oidcSecurityService: OidcSecurityService) { } // add OidcSecurityService here
 
   ngOnInit(): void {
+  //grabs userId from url and sets it as the userId if null grabs userId of current user
     this.userId = this.route.snapshot.paramMap.get('userId') || '';
     if (!this.userId) {
       this.userId = this.userService.getUserId();

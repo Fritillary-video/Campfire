@@ -8,3 +8,9 @@
   justify-content: flex-start;
   gap: 20px;
 }
+.buttons-container {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+

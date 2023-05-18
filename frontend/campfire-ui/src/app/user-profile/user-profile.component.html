@@ -6,20 +6,22 @@
       <mat-card-subtitle>Subscribers: {{ subscribers }}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
-  <button mat-raised-button color="primary" (click)="goToUploadVideo()"
-          *ngIf="userId === userService.getUserId()">Upload Video</button>
 
-  <button *ngIf="showSubscribeButton && isAuthenticated && userId !== userService.getUserId()"
-          mat-raised-button color="warn" (click)="subscribeToUser()">
-    SUBSCRIBE
-  </button>
+  <div class="buttons-container">
+    <button mat-raised-button color="primary" (click)="goToUploadVideo()"
+            *ngIf="userId === userService.getUserId()">Upload Video</button>
 
-  <button *ngIf="showUnsubscribeButton && isAuthenticated && userId !== userService.getUserId()"
-          mat-raised-button color="accent" (click)="unsubscribeToUser()">
-    UNSUBSCRIBED
-  </button>
+    <button *ngIf="showSubscribeButton && isAuthenticated && userId !== userService.getUserId()"
+            mat-raised-button color="warn" (click)="subscribeToUser()">
+      SUBSCRIBE
+    </button>
+
+    <button *ngIf="showUnsubscribeButton && isAuthenticated && userId !== userService.getUserId()"
+            mat-raised-button color="accent" (click)="unsubscribeToUser()">
+      UNSUBSCRIBED
+    </button>
+  </div>
 </div>
-
 <div class="profile-comp">
   <div class="video-card" *ngFor="let userOwnedVideo of userOwned">
     <app-video-card [video]="userOwnedVideo" [showDeleteButton]="true" (delete)="deleteVideo($event)"></app-video-card>
