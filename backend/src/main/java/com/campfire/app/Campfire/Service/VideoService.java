@@ -228,7 +228,7 @@ public class VideoService {
         return getAllVideos().stream().filter((video) -> {
             for (String word : words) {
                 String capitalWord = "";
-                if(Character.toLowerCase(word.charAt(word.length()-1)) =='s'){
+                if(Character.toLowerCase(word.charAt(word.length()-1)) =='s' && word.length() > 1){
                     word = word.substring(0, word.length()-1);
                 }
                 capitalWord = Character.toUpperCase(word.charAt(0)) + word.substring(1, word.length());
