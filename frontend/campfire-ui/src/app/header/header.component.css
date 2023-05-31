@@ -14,3 +14,9 @@
 .example-full-width {
   width: 100%;
 }
+
+@media (max-width: 750px) {
+  .example-text{
+    display:none;
+  }
+}

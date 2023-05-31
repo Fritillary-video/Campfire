@@ -28,13 +28,14 @@ export class UserProfileComponent implements OnInit {
   };
   userId?: string; // Only this property should exist, remove any other 'userId' declaration
   subscribers: number = 0;
-isAuthenticated: boolean = false;
+  isAuthenticated: boolean = false;
 
   constructor(public userService: UserService, private route: ActivatedRoute,
               private videoService: VideoService, private router: Router,
               private oidcSecurityService: OidcSecurityService) { } // add OidcSecurityService here
 
   ngOnInit(): void {
+  //grabs userId from url and sets it as the userId if null grabs userId of current user
     this.userId = this.route.snapshot.paramMap.get('userId') || '';
     if (!this.userId) {
       this.userId = this.userService.getUserId();

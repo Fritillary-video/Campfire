@@ -56,12 +56,28 @@ mat-card[ng-reflect-router-link] {
 
 @media (max-width: 750px) {
   .video-player-app {
-    width: 100%;
+    width: 90%;
+    padding-left: 5%;
+  }
+  
+  .suggestion-bar {
+    display: none;
+    flex: 2;
+    order: 1;
+  }
+  .divider{
+    display:none;
+  }
+  .like-dislike-section{
+    padding-right: 10px;
   }
   .video-detail{
     margin-top: 40px;
-    margin-left: 1px;
+    margin-left: 5px;
+    display:flex;
+    flex-wrap: wrap;
   }
+  
 
 }
 
@@ -71,9 +87,14 @@ mat-card[ng-reflect-router-link] {
     width: 900px;
     height: 500px;
   }
+
   .video-detail{
     margin-top: 40px;
     margin-left: 100px;
+  }
+
+  .like-dislike-section{
+    padding-right: 10px;
   }
 
 }

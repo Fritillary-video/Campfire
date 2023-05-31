@@ -227,9 +227,16 @@ public class VideoService {
         String[] words = search.split(" ");
         return getAllVideos().stream().filter((video) -> {
             for (String word : words) {
+                String capitalWord = "";
+                if(Character.toLowerCase(word.charAt(word.length()-1)) =='s' && word.length() > 1){
+                    word = word.substring(0, word.length()-1);
+                }
+                capitalWord = Character.toUpperCase(word.charAt(0)) + word.substring(1, word.length());
                 if (video.getTitle().toLowerCase().contains(word.toLowerCase())) {
                     return true;
-                } else if (video.getTags().contains(word.toLowerCase()) || video.getTags().contains(word)) {
+                } else if (video.getTags().contains(word.toLowerCase()) 
+                || video.getTags().contains(word) 
+                || video.getTags().contains(capitalWord)) {
                     return true;
                 }
             }
@@ -237,12 +244,16 @@ public class VideoService {
         }).collect(Collectors.toSet());
     }
 
+    // public Set<VideoDto> suggestedVideosSearch(Set<VideoDto> videos){
+    //     return videos.addAll(getAllVideos());
+    // }
+
     public List<VideoDto> getAllVideos() {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).collect(Collectors.toList());
     }
 
     public void deleteVideo(String videoId) {
         videoRepository.deleteById(videoId);
+        userService.removeVideoFromUserLists(videoId);
     }
-
 }
