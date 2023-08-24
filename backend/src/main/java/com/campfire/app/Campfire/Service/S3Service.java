@@ -1,9 +1,15 @@
 package com.campfire.app.Campfire.Service;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -18,6 +24,19 @@ import java.util.UUID;
 public class S3Service implements FileService {
     private final AmazonS3Client awsS3Client;
     public static final String BUCKET_NAME = "campfirebucket";
+
+    @Autowired
+    public S3Service() {
+        Dotenv dotenv = Dotenv.load();
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(
+                dotenv.get("AWS_ACCESS_KEY_ID"),
+                dotenv.get("AWS_SECRET_ACCESS_KEY")
+        );
+        this.awsS3Client = (AmazonS3Client) AmazonS3ClientBuilder.standard()
+                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                .withRegion(Regions.US_EAST_1)
+                .build();
+    }
 
     @Override
     public String uploadFile(MultipartFile file) {
